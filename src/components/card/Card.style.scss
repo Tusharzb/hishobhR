@@ -1,0 +1,21 @@
+@import '../../variables.style.scss';
+
+.card-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    height: 200px;
+    border: 1px solid black;
+    .card-header {
+      height: 20%;
+      background-color: $header;
+    }
+    .card-body {
+      height: 70%;
+    }
+    .card-footer {
+      height: 10%;
+      background-color: $footer;
+
+    }
+}
