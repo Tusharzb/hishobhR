@@ -3,30 +3,30 @@ import React from "react";
 import "./Card.style.scss";
 
 const Card = (props) => {
-  const { title, action1, action2 } = props;
+  const { title, content, action1, action2,id } = props;
   return (
     <div>
-      <div className="row">
-        <div className="col s12 m6">
-          <div className="card blue lighten-1">
-            <div className="card-content white-text">
-              <span className="card-title">Card Title</span>
-              <p>
-                I am a very simple card. I am good at containing small bits of
-                information. I am convenient because I require little markup to
-                use effectively.
-              </p>
+          <div className="card purple lighten-1">
+            <div className="card-content black-text">
+              <span className="card-title">{title}</span>
+              {content}
             </div>
             <div className="card-action right-align">
-                <a href="#" className="red-text ">
-                  This is a link
-                </a>
-                <a href="#">This is a link</a>
+              {
+                action1 !== undefined ?
+                  // <a className="waves-effect waves-teal btn-flat">Button</a>
+                  <button href="#" className="cyan lighten-2 waves-effect btn-flat" onClick={()=>action1.action(id)} >{action1.label}</button>
+                  : <div></div>
+              }
+              {
+                action2 !==undefined ?
+                  // <a className="waves-effect waves-teal btn-flat">Button</a>
+                  <button href="#" className="cyan lighten-2 waves-effect btn-flat" onClick={()=> action2.action(id)} >{action2.label}</button> 
+                  : <div></div>
+              }
             </div>
           </div>
         </div>
-      </div>
-    </div>
   );
 };
 

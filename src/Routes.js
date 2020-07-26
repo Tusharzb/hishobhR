@@ -1,19 +1,16 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch , Redirect} from 'react-router-dom';
 
 import Home from './pages/Home/Home';
-import Tracker from './pages/Tracker';
+import Transactions from './pages/Transactions';
 
-const Routes = () => {
+const Routes = (props) => {
     return (
         <div>
             <Switch>
-                <Route path="/trackers" >
-                    <Tracker />
-                </Route>
-                <Route path="/" >
-                    <Home />
-                </Route>
+                <Route path="/trackers/:id"  component={Transactions}/>
+                <Route exact path="/trackers"  component={Home} />
+                <Redirect exact from='/' to='/trackers'/>
             </Switch>
         </div>
     );

@@ -1,17 +1,20 @@
 import React from "react";
 import { BrowserRouter } from "react-router-dom";
 
-import "./App.css";
+import "./App.style.scss";
 import Routes from "./Routes";
 import Header from "./components/Header/Header";
+
 
 class App extends React.Component {
   render() {
     return (
-      <div>
+      <div >
         <BrowserRouter>
           <Header />
-          <Routes />
+          <div className="container"> 
+            <Routes />
+          </div>
         </BrowserRouter>
       </div>
     );

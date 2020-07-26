@@ -1,7 +1,6 @@
 import React, { Component } from "react";
-import Shimmer from "react-shimmer-effect";
 
-import Card from "../../components/card/Card";
+import Card from "../../components/Card/Card";
 
 import { getTrackers } from "../../services/base";
 
@@ -32,9 +31,15 @@ export default class Home extends Component {
     }
   };
 
+  GoTo = (id) => {
+    const { location,history }= this.props;
+    history.push(`${location.pathname}/${id}`);
+  }
+
   render() {
     const { isLoading, trackers } = this.state;
     console.log(isLoading);
+    console.log("props",this.props)
     return (
       <div>
         {isLoading ? (
@@ -42,12 +47,16 @@ export default class Home extends Component {
             <div className="indeterminate"></div>
           </div>
         ) : trackers && trackers.length > 0 ? (
-          <div className="tracker-card-wrapper">
-            <Card />
+          <div className="row">
+            {trackers.map(item => (
+              <div key={item._id} className="col s4">
+                <Card  title={item.name} id={item._id} content={item.description} action1={{ label: "Select", action: this.GoTo }} />
+              </div>
+            ))}
           </div>
         ) : (
-          <div>Create New Tracker</div>
-        )}
+              <div>Create New Tracker</div>
+            )}
       </div>
     );
   }
