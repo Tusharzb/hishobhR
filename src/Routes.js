@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Switch , Redirect} from 'react-router-dom';
 
 import Home from './pages/Home/Home';
-import Transactions from './pages/Transactions';
+import Transactions from './pages/Transactions/Transactions';
 
 const Routes = (props) => {
     return (

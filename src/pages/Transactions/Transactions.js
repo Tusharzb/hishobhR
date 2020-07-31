@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 
-import Table from '../components/Table/Table'
-import { getTransactions, getTransactionSummary } from '../services/base';
+import Table from '../../components/Table/Table';
+import Collapsible from '../../components/Collapsible/Collapsible';
+import { getTransactions, getTransactionSummary } from '../../services/base';
+import './Transaction.style.scss';
 
 const Transactions = (props) => {
     const [transactions, setTransactions] = useState([]);
@@ -74,9 +76,10 @@ const Transactions = (props) => {
                                 {
                                     TransactionSummary.length > 0 ? (
                                         <Table columns={trackerSummary} rows={TransactionSummary} />
-                                    ) : (<div>No Data </div>)
-                                }
+                                        ) : (<div>No Data </div>)
+                                    }
                             </section>
+                           <Collapsible data={[{label:"A",content:"A content"},{label:"B",content:"B content"}]} />
                             <section>
                                 <h4>Transaction</h4>
                                 {
