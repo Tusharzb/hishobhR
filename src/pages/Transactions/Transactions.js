@@ -2,8 +2,13 @@ import React, { useEffect, useState } from 'react';
 
 import Table from '../../components/Table/Table';
 import Collapsible from '../../components/Collapsible/Collapsible';
+import Form from '../../components/Form/Form';
+
 import { getTransactions, getTransactionSummary } from '../../services/base';
+
 import './Transaction.style.scss';
+
+
 
 const Transactions = (props) => {
     const [transactions, setTransactions] = useState([]);
@@ -61,6 +66,15 @@ const Transactions = (props) => {
         setisLoading(false);
     }
 
+    const withdrawForm = (data)=>{
+        console.log("withdraw",data);
+    } 
+
+    
+    const depositeForm = (data)=>{
+        console.log("deposite",data);
+    } 
+
 
     return (
         <div>
@@ -79,7 +93,7 @@ const Transactions = (props) => {
                                         ) : (<div>No Data </div>)
                                     }
                             </section>
-                           <Collapsible data={[{label:"A",content:"A content"},{label:"B",content:"B content"}]} />
+                           <Collapsible data={[{label:"Deposite",content: <Form submit={depositeForm} deposite /> },{label:"Withdraw",content:<Form submit={withdrawForm} /> }]} />
                             <section>
                                 <h4>Transaction</h4>
                                 {

@@ -10,8 +10,8 @@ const Collapsible = (props) => {
    const renderData = () =>{
         const { data } = props;
         return data.map(item=>(
-                <li>
-                <div className="collapsible-header">{item.label}</div>
+                <li className="deposite">
+                <div className={`collapsible-header ${item.label === 'Withdraw' ? 'red lighten-3': 'green lighten-3'}`}>{item.label}</div>
                 <div className="collapsible-body"><span>{item.content}</span></div>
                 </li>
             ))
