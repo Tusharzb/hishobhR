@@ -59,21 +59,21 @@ const Transactions = (props) => {
             console.log(response)
             const transactions = (response[0].data.data || []);
             const trackerSummary = (response[1].data.data || []);
-            console.log(trackerSummary,transactions)
+            console.log(trackerSummary, transactions)
             setTransactions(transactions);
             setTransactionSummary(trackerSummary);
         });
         setisLoading(false);
     }
 
-    const withdrawForm = (data)=>{
-        console.log("withdraw",data);
-    } 
+    const withdrawForm = (data) => {
+        console.log("withdraw", data);
+    }
 
-    
-    const depositeForm = (data)=>{
-        console.log("deposite",data);
-    } 
+
+    const depositeForm = (data) => {
+        console.log("deposite", data);
+    }
 
 
     return (
@@ -84,21 +84,24 @@ const Transactions = (props) => {
                         <div className="indeterminate"></div>
                     </div>
                 ) : (
-                        <div>
+                        <div className="transaction-wrapper">
                             <section>
                                 <h4>Transaction Summary</h4>
                                 {
                                     TransactionSummary.length > 0 ? (
                                         <Table columns={trackerSummary} rows={TransactionSummary} />
-                                        ) : (<div>No Data </div>)
-                                    }
+                                    ) : (<div>No Data </div>)
+                                }
                             </section>
-                           <Collapsible data={[{label:"Deposite",content: <Form submit={depositeForm} deposite /> },{label:"Withdraw",content:<Form submit={withdrawForm} /> }]} />
+                            <section>
+                                <Collapsible data={[{ label: "Deposite", content: <Form submit={depositeForm} deposite /> }, { label: "Withdraw", content: <Form submit={withdrawForm} /> }]} />
+                            </section>
+                            <hr/>
                             <section>
                                 <h4>Transaction</h4>
                                 {
                                     transactions.length > 0 ? (
-                                        <Table columns={columns} rows={transactions} />
+                                        <Table responsive columns={columns} rows={transactions} />
                                     ) : (<div>No Data </div>)
                                 }
                             </section>
