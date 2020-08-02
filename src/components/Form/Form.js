@@ -3,9 +3,9 @@ import React,{useEffect,useState} from 'react'
 import './Form.style.scss';
 
 const Form = (props) => {
-    const [Reason, setReason] = useState();
-    const [Category, setCategory] = useState();
-    const [Amount, setAmount] = useState();
+    const [Reason, setReason] = useState("");
+    const [Category, setCategory] = useState('');
+    const [Amount, setAmount] = useState("");
 
     const categories = [
         "Personal",
@@ -18,15 +18,19 @@ const Form = (props) => {
         "Food",
         "Travel",
     ]
-    
-
+    let instances ="";
     useEffect(()=>{
-            var instances = M.FormSelect.init(document.querySelectorAll('select'), {});
+        instances = M.FormSelect.init(document.querySelectorAll('select'), {});
     },[])
 
     const submit = () =>{
+        console.log({Reason,Category,Amount})
         if(Reason && Category && Amount){
             props.submit({Reason,Category,Amount})
+            setReason("")
+            setCategory('')
+            // instances.destory();
+            setAmount("")
         }
     }
 
@@ -34,23 +38,22 @@ const Form = (props) => {
         <div>
             <div className="row">
                 <div className="input-field col s12 m4">
-                    <input id="first_name" type="text" className="validate" onChange={e=>setReason(e.target.value)}/>
-                    <label for="first_name">First Name</label>
-                </div>
-                <div class="input-field col s12 m3">
-                    <select placeholder="Select" onChange={e=>setCategory(e.target.value)}>
-                    {categories.map((item,key) =>{
-                        return <option key={key} value={item}>{item}</option>
-                    })}
-                    </select>
-                    <label>Materialize Select</label>
+                    <input value={Reason} placeholder="reason" type="text" className="validate" onChange={e=>setReason(e.target.value)}/>
                 </div>
                 <div className="input-field col s12 m3">
-                    <input id="first_name" type="text" className="validate" onChange={e=>setAmount(e.target.value)}/>
-                    <label for="first_name">Amount</label>
+                    <select value={Category} placeholder="Select" onChange={e=>setCategory(e.target.value)}>
+                    <option value="" selected >Select Category</option>
+                    {categories.map((item,key) =>{
+                        return <option key={key} value={item} >{item}</option>
+                    })}
+                    </select>
+                    <label>Category Select</label>
+                </div>
+                <div className="input-field col s12 m3">
+                    <input value={Amount} placeholder="amount" type="number" className="validate" onChange={e=>setAmount(e.target.value)}/>
                 </div>
                 <div className="col s12 m2">
-                    <button class={`footer waves-effect waves-light btn ${props.deposite ? 'green lighten-3' : 'red lighten-3'}`} onClick={submit}>button</button>
+                    <button className={`footer waves-effect waves-light btn ${props.deposite ? 'green lighten-2' : 'red lighten-2'}`} onClick={submit}>Add</button>
                 </div>
             </div>
         </div>

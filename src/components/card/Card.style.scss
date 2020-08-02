@@ -1,20 +1,21 @@
-@import '../../variables.style.scss';
+@import "../../variables.style.scss";
 
 .card-wrapper {
+  .card-content {
+    height: 150px;
+    color: black;
+    font-weight: 400;
+    .card-title {
+      color: black;
+      font-weight: 500;
+    }
+  }
+  .card-footer {
+    height: 10%;
     display: flex;
-    flex-direction: column;
-    width: 300px;
-    height: 200px;
-    border: 1px solid black;
-    .card-header {
-      height: 20%;
-      background-color: $header;
-    }
-    .card-body {
-      height: 70%;
-    }
-    .card-footer {
-      height: 10%;
-      background-color: $footer;
-    }
+    direction: row;
+    justify-content: space-between;
+    align-items: center;
+    color: rgb(230, 198, 198);
+  }
 }

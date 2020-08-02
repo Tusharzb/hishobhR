@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { lazy } from 'react';
 import { Route, Switch , Redirect} from 'react-router-dom';
 
-import Home from './pages/Home/Home';
-import Transactions from './pages/Transactions/Transactions';
+const Home = import(lazy('./pages/Home/Home'));
+const Transactions = import(lazy('./pages/Transactions/Transactions'));
 
 const Routes = (props) => {
     return (

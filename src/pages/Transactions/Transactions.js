@@ -3,17 +3,24 @@ import React, { useEffect, useState } from 'react';
 import Table from '../../components/Table/Table';
 import Collapsible from '../../components/Collapsible/Collapsible';
 import Form from '../../components/Form/Form';
+import Summary from '../../components/TransactionSummary/Summary';
 
-import { getTransactions, getTransactionSummary } from '../../services/base';
+import { getTransactions, getTransactionSummary, saveTransactionSummary } from '../../services/base';
 
 import './Transaction.style.scss';
 
 
+const ActionRow = (props) => {
+    return (
+        <button onClick={() => props.deleteTransaction()} className="waves-effect waves-light btn red lighten-2">Delete</button>
+    )
+}
+
 
 const Transactions = (props) => {
     const [transactions, setTransactions] = useState([]);
-    const [TransactionSummary, setTransactionSummary] = useState([])
     const [isLoading, setisLoading] = useState(true);
+    const [summaryReload, setsummaryReload] = useState(false);
     const [columns, setcolumns] = useState([{
         label: "Reason",
         key: "reason"
@@ -31,48 +38,60 @@ const Transactions = (props) => {
         key: "action"
     }]);
 
-    const [trackerSummary, settrackerSummary] = useState([{
-        label: "Withdraw",
-        key: "totalwithdraw"
-    },
-    {
-        label: "Deposite",
-        key: "totaldeposite"
-    },
-    {
-        label: "Balance",
-        key: "balance"
-    }]);
 
+    const [TrackerId, setTrackerId] = useState("");
 
+    const id = props.match.params.id;
 
     useEffect(() => {
-        const id = props.match.params.id;
+        setTrackerId(id)
         loadData(id);
     }, [])
 
+    const deleteTransaction = (transactionId) => {
+        console.log(transactionId)
+    }
+
     const loadData = async (Trackerid) => {
-        Promise.all([
-            getTransactions(Trackerid),
-            getTransactionSummary(Trackerid)
-        ]).then(response => {
+        setisLoading(true);
+        try {
+            const response = await getTransactions(Trackerid);
             console.log(response)
-            const transactions = (response[0].data.data || []);
-            const trackerSummary = (response[1].data.data || []);
-            console.log(trackerSummary, transactions)
+            const transactions = (response.data.data || []);
+            transactions.forEach(element => {
+                element.action = <ActionRow deleteTransaction={() => deleteTransaction(element._id)} />;
+            })
             setTransactions(transactions);
-            setTransactionSummary(trackerSummary);
-        });
-        setisLoading(false);
+            setisLoading(false);
+        }catch(err){
+            console.log(err);
+        }
     }
 
-    const withdrawForm = (data) => {
-        console.log("withdraw", data);
-    }
-
-
-    const depositeForm = (data) => {
-        console.log("deposite", data);
+    const submitTransaction = async (data, type) => {
+        const payload = {
+            reason: data.Reason,
+            category: data.Category
+        }
+        if (type === "withdraw") {
+            payload.withdraw = data.Amount;
+            payload.deposite = "0";
+            console.log("withdraw", payload);
+        } else {
+            payload.deposite = data.Amount;
+            payload.withdraw = "0";
+            console.log("deposite", payload);
+        }
+        try {
+            console.log(TrackerId)
+            const transaction = await saveTransactionSummary(TrackerId, payload);
+            if(transaction){
+                loadData(TrackerId);
+                setsummaryReload(!summaryReload);
+            }
+        } catch (err) {
+            console.log(err);
+        }
     }
 
 
@@ -88,15 +107,14 @@ const Transactions = (props) => {
                             <section>
                                 <h4>Transaction Summary</h4>
                                 {
-                                    TransactionSummary.length > 0 ? (
-                                        <Table columns={trackerSummary} rows={TransactionSummary} />
-                                    ) : (<div>No Data </div>)
+                                    <Summary reload={false} trackerId={TrackerId} />
                                 }
                             </section>
                             <section>
-                                <Collapsible data={[{ label: "Deposite", content: <Form submit={depositeForm} deposite /> }, { label: "Withdraw", content: <Form submit={withdrawForm} /> }]} />
+
+                                <Collapsible data={[{ label: "Deposite", content: <Form submit={(data) => submitTransaction(data, "deposite")} deposite /> }, { label: "Withdraw", content: <Form submit={(data) => submitTransaction(data, "withdraw")} /> }]} />
                             </section>
-                            <hr/>
+                            <hr />
                             <section>
                                 <h4>Transaction</h4>
                                 {

@@ -16,18 +16,18 @@ const Table = (props) => {
                     <thead>
                         <tr>
                             {
-                                columns ? columns.map(item => (
-                                    <th key={item._id}>{item.label}</th>
-                                )) : (<th></th>)
+                                columns ? columns.map((item,key) => (
+                                    <th key={key}>{item.label}</th>
+                                )) : (<th key={item._id}></th>)
                             }
                         </tr>
                     </thead>
                     <tbody>
-                        {rows ? rows.map(item => (
-                            <tr key={item._id}>
-                                {columns ? (columns.map(column => (<td key={column._id}> {item[column.key]} </td>))) : ""}
+                        {rows ? rows.map((item,key) => (
+                            <tr key={key}>
+                                {columns ? (columns.map((column,key) => (<td key={key}> {item[column.key]} </td>))) : ""}
                             </tr>
-                        )) : (<tr></tr>)}
+                        )) : (<tr key={key}></tr>)}
                     </tbody>
                 </table>
             </div>

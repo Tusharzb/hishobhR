@@ -4,7 +4,7 @@
   "description": "hishobh frontend",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server",
+    "start": "webpack-dev-server --open",
     "build": "webpack --mode production",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -40,6 +40,7 @@
     "axios": "^0.19.2",
     "materialize-css": "^1.0.0-rc.2",
     "mini-css-extract-plugin": "^0.9.0",
+    "moment": "^2.27.0",
     "node-sass": "^4.14.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
