@@ -5,7 +5,7 @@ import Collapsible from '../../components/Collapsible/Collapsible';
 import Form from '../../components/Form/Form';
 import Summary from '../../components/TransactionSummary/Summary';
 
-import { getTransactions, getTransactionSummary, saveTransactionSummary } from '../../services/base';
+import { getTransactions, saveTransactionSummary, removeTransaction } from '../../services/base';
 
 import './Transaction.style.scss';
 
@@ -24,6 +24,10 @@ const Transactions = (props) => {
     const [columns, setcolumns] = useState([{
         label: "Reason",
         key: "reason"
+    },
+    {
+        label:'Category',
+        key:'category'
     },
     {
         label: "Withdraw",
@@ -48,8 +52,17 @@ const Transactions = (props) => {
         loadData(id);
     }, [])
 
-    const deleteTransaction = (transactionId) => {
-        console.log(transactionId)
+    const deleteTransaction = async (transactionId) => {
+        try {
+            const transaction = await removeTransaction(transactionId);
+            if (transaction) {
+                console.log(transactionId);
+                console.log(transaction);
+                loadData(TrackerId)
+            }
+        } catch (err) {
+            console.log(err)
+        }
     }
 
     const loadData = async (Trackerid) => {
@@ -63,7 +76,7 @@ const Transactions = (props) => {
             })
             setTransactions(transactions);
             setisLoading(false);
-        }catch(err){
+        } catch (err) {
             console.log(err);
         }
     }
@@ -85,7 +98,7 @@ const Transactions = (props) => {
         try {
             console.log(TrackerId)
             const transaction = await saveTransactionSummary(TrackerId, payload);
-            if(transaction){
+            if (transaction) {
                 loadData(TrackerId);
                 setsummaryReload(!summaryReload);
             }

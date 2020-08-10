@@ -8,6 +8,10 @@
     "build": "webpack --mode production",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "engines": {
+    "npm": "6.13.4",
+    "node": "12.14.1"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Itstushar/hishobh-ui.git"

@@ -25,7 +25,7 @@ const Table = (props) => {
                     <tbody>
                         {rows ? rows.map((item,key) => (
                             <tr key={key}>
-                                {columns ? (columns.map((column,key) => (<td key={key}> {item[column.key]} </td>))) : ""}
+                                {columns ? (columns.map((column,key) => (<td key={key}> {item[column.key] ? item[column.key] : ""} </td>))) : ""}
                             </tr>
                         )) : (<tr key={key}></tr>)}
                     </tbody>
