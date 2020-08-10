@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 
-import Table from '../../components/Table/Table';
-import Collapsible from '../../components/Collapsible/Collapsible';
-import Form from '../../components/Form/Form';
-import Summary from '../../components/TransactionSummary/Summary';
+import Table from '../../Components/Table/Table';
+import Collapsible from '../../Components/Collapsible/Collapsible';
+import Form from '../../Components/Form/Form';
+import Summary from '../../Components/TransactionSummary/Summary';
 
-import { getTransactions, saveTransactionSummary, removeTransaction } from '../../services/base';
+import { getTransactions, saveTransactionSummary, removeTransaction } from '../../Services/base';
 
 import './Transaction.style.scss';
 

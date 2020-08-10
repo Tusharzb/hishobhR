@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import moment from 'moment';
 
-import Card from "../../components/Card/Card";
+import Card from "../../Components/Card/Card";
 
-import { getTrackers, createTracker } from "../../services/base";
+import { getTrackers, createTracker } from "../../Services/base";
 
 import './Home.style.scss';
 export default class Home extends Component {

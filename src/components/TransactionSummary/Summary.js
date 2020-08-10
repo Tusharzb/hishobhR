@@ -1,6 +1,6 @@
 import React,{useState,useEffect } from 'react'
 import Table from '../Table/Table';
-import { getTransactionSummary } from '../../services/base';
+import { getTransactionSummary } from '../../Services/base';
 import { CircleLoader } from '../Loader/Loader';
 
 
