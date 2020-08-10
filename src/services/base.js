@@ -13,3 +13,11 @@ export const getTransactions = (TrackerId) =>{
 export const getTransactionSummary = (TrackerId) =>{
     return axios.get(`${baseUrl}/api/transactions/summary/${TrackerId}`);
 }
+
+export const saveTransactionSummary = (TrackerId,data) =>{
+    return axios.post(`${baseUrl}/api/transactions/${TrackerId}`,data);
+}
+
+export const createTracker = (data) =>{
+    return axios.post(`${baseUrl}/api/tracker`,data);
+}

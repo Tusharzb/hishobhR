@@ -10,27 +10,27 @@ const Table = (props) => {
     })
 
     return (
-        <div>
-
-            <table className="responsive-table highlight">
-                <thead>
-                    <tr>
-                        {
-                            columns ? columns.map(item => (
-                                <th key={item._id} className="heading"><h6>{item.label}</h6></th>
-                            )) : (<th></th>)
-                        }
-                    </tr>
-                </thead>
-
-                <tbody>
-                    {rows ? rows.map(item => (
-                        <tr key={item._id}>
-                            {columns ? (columns.map(column => (<td key={column._id}> {item[column.key]} </td>) )) : ""}
+        <div className="row">
+            <div className="col s12">
+                <table className={`${props.responsive ? 'responsive-table  highlight' : 'table  highlight'}`}>
+                    <thead>
+                        <tr>
+                            {
+                                columns ? columns.map((item,key) => (
+                                    <th key={key}>{item.label}</th>
+                                )) : (<th key={item._id}></th>)
+                            }
                         </tr>
-                    )) : (<tr></tr>)}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {rows ? rows.map((item,key) => (
+                            <tr key={key}>
+                                {columns ? (columns.map((column,key) => (<td key={key}> {item[column.key]} </td>))) : ""}
+                            </tr>
+                        )) : (<tr key={key}></tr>)}
+                    </tbody>
+                </table>
+            </div>
         </div>
     )
 }
