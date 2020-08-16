@@ -1,4 +1,5 @@
 import React,{useEffect,useState} from 'react'
+import {categories} from '../../Utils/Utils';
 
 import './Form.style.scss';
 
@@ -7,17 +8,7 @@ const Form = (props) => {
     const [Category, setCategory] = useState('');
     const [Amount, setAmount] = useState("");
 
-    const categories = [
-        "Personal",
-        "Movies",
-        "Gym",
-        "Donation",
-        "Salary",
-        "Electronics",
-        "Games",
-        "Food",
-        "Travel",
-    ]
+    
     let instances ="";
     useEffect(()=>{
         instances = M.FormSelect.init(document.querySelectorAll('select'), {});

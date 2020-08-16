@@ -10,7 +10,7 @@ class App extends React.Component {
   render() {
     return (
       <div >
-        <BrowserRouter>
+        <BrowserRouter basename="/hishobhR">
           <Header />
           <div className="container"> 
             <Routes />

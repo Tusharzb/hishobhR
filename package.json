@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "hishobh frontend",
   "main": "index.js",
+  "homepage": "https://sharewithme.online/hishobhR/",
   "scripts": {
     "start": "webpack-dev-server --open",
     "build": "webpack --mode production",
@@ -21,7 +22,6 @@
   "bugs": {
     "url": "https://github.com/Itstushar/hishobh-ui/issues"
   },
-  "homepage": "https://github.com/Itstushar/hishobh-ui#readme",
   "devDependencies": {
     "@babel/cli": "^7.10.5",
     "@babel/core": "^7.1.0",

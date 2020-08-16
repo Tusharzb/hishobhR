@@ -5,7 +5,7 @@ import Collapsible from '../../Components/Collapsible/Collapsible';
 import Form from '../../Components/Form/Form';
 import Summary from '../../Components/TransactionSummary/Summary';
 
-import { getTransactions, saveTransactionSummary, removeTransaction } from '../../Services/base';
+import { getTransactions, saveTransactionSummary, removeTransaction, lockTracker } from '../../Services/base';
 
 import './Transaction.style.scss';
 
@@ -26,8 +26,8 @@ const Transactions = (props) => {
         key: "reason"
     },
     {
-        label:'Category',
-        key:'category'
+        label: 'Category',
+        key: 'category'
     },
     {
         label: "Withdraw",
@@ -107,6 +107,15 @@ const Transactions = (props) => {
         }
     }
 
+    const lock = async () => {
+        try {
+            const response = await lockTracker({TrackerId});
+            console.log(response);
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
 
     return (
         <div>
@@ -118,7 +127,10 @@ const Transactions = (props) => {
                 ) : (
                         <div className="transaction-wrapper">
                             <section>
-                                <h4>Transaction Summary</h4>
+                                <div className="tracker-header">
+                                    <h4>Transaction Summary</h4>
+                                    <button className='footer waves-effect waves-light btn blue lighten-2' onClick={lock}>Lock</button>
+                                </div>
                                 {
                                     <Summary reload={false} trackerId={TrackerId} />
                                 }
