@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from 'axios'
 
 const baseUrl = "https://hishobh.herokuapp.com";
 
@@ -20,4 +20,8 @@ export const saveTransactionSummary = (TrackerId,data) =>{
 
 export const createTracker = (data) =>{
     return axios.post(`${baseUrl}/api/tracker`,data);
+}
+
+export const removeTransaction = (transactionId) =>{
+    return axios.delete(`${baseUrl}/api/transactions/${transactionId}`);
 }

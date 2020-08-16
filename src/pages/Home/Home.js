@@ -1,9 +1,9 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import moment from 'moment';
 
-import Card from "../../components/Card/Card";
+import Card from "../../Components/Card/Card";
 
-import { getTrackers, createTracker } from "../../services/base";
+import { getTrackers, createTracker } from "../../Services/base";
 
 import './Home.style.scss';
 export default class Home extends Component {
@@ -27,6 +27,7 @@ export default class Home extends Component {
       const userId = "5f12bf65af7273065c1a0700";
       const response = await getTrackers(userId);
       console.log(response);
+      console.log("we are here!");
       const trackers = response.data || [];
       if (trackers.data.length > 0) {
         this.setState({ trackers: trackers.data });
