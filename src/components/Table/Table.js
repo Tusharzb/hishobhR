@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import moment from 'moment';
 
 const Table = (props) => {
     const { columns, rows } = props;
@@ -9,6 +10,10 @@ const Table = (props) => {
 
     })
 
+    const formatDate=(value) => {
+      return moment(value).format('MMMM Do YYYY');
+    }
+
     return (
         <div className="row">
             <div className="col s12">
@@ -16,16 +21,18 @@ const Table = (props) => {
                     <thead>
                         <tr>
                             {
-                                columns ? columns.map((item,key) => (
+                                columns ? columns.map((item, key) => (
                                     <th key={key}>{item.label}</th>
                                 )) : (<th key={item._id}></th>)
                             }
                         </tr>
                     </thead>
                     <tbody>
-                        {rows ? rows.map((item,key) => (
+                        {rows ? rows.map((item, key) => (
                             <tr key={key}>
-                                {columns ? (columns.map((column,key) => (<td key={key}> {item[column.key] ? item[column.key] : ""} </td>))) : ""}
+                                {columns ? (columns.map((column, key) => (<td key={key}> {item[column.key] ?
+                                    (column.type && column.type === "date") ? formatDate(item[column.key]) : item[column.key]
+                                    : ""} </td>))) : ""}
                             </tr>
                         )) : (<tr key={key}></tr>)}
                     </tbody>

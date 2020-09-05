@@ -38,6 +38,11 @@ const Transactions = (props) => {
         key: "deposite"
     },
     {
+        label: "Created",
+        key: "createdOn",
+        type:"date"
+    },
+    {
         label: "Action",
         key: "action"
     }]);
