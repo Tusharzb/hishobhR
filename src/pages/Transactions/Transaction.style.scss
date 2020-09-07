@@ -1,9 +1,14 @@
-.transaction-wrapper > *{
+.transaction-wrapper {
         margin: 40px 0;
-        .tracker-header{
+        .tracker-summary{
                 display: flex;
                 flex-direction: row;
                 justify-content: space-between
+        }
+        .tracker-header{
+                display: flex;
+                justify-content: space-between;
+                direction: row;
         }
 }
         

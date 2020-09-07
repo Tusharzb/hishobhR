@@ -37,8 +37,11 @@ export default class Home extends Component {
   };
 
   GoTo = (id) => {
+    const { trackers } = this.state;
     const { location, history } = this.props;
-    history.push(`${location.pathname}/${id}`);
+    const selectedIndex = trackers.find(item => item._id === id);
+    localStorage.setItem('activeTracker', JSON.stringify(selectedIndex));
+    history.push({pathname: `${location.pathname}/${id}`, state : { tracker: selectedIndex, isHistory:false }});
   }
 
   submit = async () => {
@@ -49,7 +52,7 @@ export default class Home extends Component {
         console.log(title, description)
         this.loadData();
       }
-    }catch(err){
+    } catch (err) {
       console.log(err);
     }
   }
@@ -60,7 +63,6 @@ export default class Home extends Component {
 
   render() {
     const { isLoading, trackers } = this.state;
-    console.log(isLoading);
     console.log("props", this.props)
     return (
       <div>

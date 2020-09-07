@@ -33,7 +33,7 @@ const Form = (props) => {
                 </div>
                 <div className="input-field col s12 m3">
                     <select value={Category} placeholder="Select" onChange={e=>setCategory(e.target.value)}>
-                    <option value="" selected >Select Category</option>
+                    <option value=""  >Select Category</option>
                     {categories.map((item,key) =>{
                         return <option key={key} value={item} >{item}</option>
                     })}

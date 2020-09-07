@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "hishobh frontend",
   "main": "index.js",
-  "homepage": "https://sharewithme.online/hishobhR/",
+  "homepage": "/hishobhR/",
   "scripts": {
     "start": "webpack-dev-server --open",
     "build": "webpack --mode production",

@@ -4,13 +4,10 @@ import "./Card.style.scss";
 
 
 const Card = (props) => {
-  const { title, content,createdOn, action1, action2,id } = props;
-
- 
-
+  const { title, content,createdOn, action1, action2,id ,isHistory} = props;
   return (
     <div className="card-wrapper">
-          <div className="card purple lighten-1">
+          <div className={`card ${isHistory ? 'grey lighten-2' : 'purple lighten-1'}`} >
             <div className="card-content black-text">
               <span className="card-title">{title}</span>
               {content}

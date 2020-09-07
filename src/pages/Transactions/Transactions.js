@@ -4,6 +4,7 @@ import Table from '../../Components/Table/Table';
 import Collapsible from '../../Components/Collapsible/Collapsible';
 import Form from '../../Components/Form/Form';
 import Summary from '../../Components/TransactionSummary/Summary';
+import { TransactionColumns, TransactionColumnsHistory } from '../../Utils/Utils';
 
 import { getTransactions, saveTransactionSummary, removeTransaction, lockTracker } from '../../Services/base';
 
@@ -21,44 +22,26 @@ const Transactions = (props) => {
     const [transactions, setTransactions] = useState([]);
     const [isLoading, setisLoading] = useState(true);
     const [summaryReload, setsummaryReload] = useState(false);
-    const [columns, setcolumns] = useState([{
-        label: "Reason",
-        key: "reason"
-    },
-    {
-        label: 'Category',
-        key: 'category'
-    },
-    {
-        label: "Withdraw",
-        key: "withdraw"
-    },
-    {
-        label: "Deposite",
-        key: "deposite"
-    },
-    {
-        label: "Action",
-        key: "action"
-    }]);
-
 
     const [TrackerId, setTrackerId] = useState("");
 
     const id = props.match.params.id;
-
+    const { tracker, isHistory } = props.location.state;
     useEffect(() => {
         setTrackerId(id)
         loadData(id);
+        console.log("tracker", JSON.parse(localStorage.getItem('activeTracker')));
+        console.log("tracker from state", tracker);
+        return () => {
+            localStorage.clear('activeTracker');
+        }
     }, [])
 
     const deleteTransaction = async (transactionId) => {
         try {
             const transaction = await removeTransaction(transactionId);
             if (transaction) {
-                console.log(transactionId);
-                console.log(transaction);
-                loadData(TrackerId)
+                await loadData(id)
             }
         } catch (err) {
             console.log(err)
@@ -89,14 +72,11 @@ const Transactions = (props) => {
         if (type === "withdraw") {
             payload.withdraw = data.Amount;
             payload.deposite = "0";
-            console.log("withdraw", payload);
         } else {
             payload.deposite = data.Amount;
             payload.withdraw = "0";
-            console.log("deposite", payload);
         }
         try {
-            console.log(TrackerId)
             const transaction = await saveTransactionSummary(TrackerId, payload);
             if (transaction) {
                 loadData(TrackerId);
@@ -109,7 +89,7 @@ const Transactions = (props) => {
 
     const lock = async () => {
         try {
-            const response = await lockTracker({TrackerId});
+            const response = await lockTracker({ TrackerId });
             console.log(response);
         } catch (err) {
             console.log(err);
@@ -126,25 +106,35 @@ const Transactions = (props) => {
                     </div>
                 ) : (
                         <div className="transaction-wrapper">
+                            <section className="tracker-header">
+                                <div>
+                                    <h5>{tracker.name}</h5>
+                                    <p>{tracker.description}</p>
+                                </div>
+                                {!isHistory ?
+                                    <button className='footer waves-effect waves-light btn blue lighten-2' onClick={lock}>Lock</button> : <div></div>
+                                }
+                            </section>
                             <section>
-                                <div className="tracker-header">
-                                    <h4>Transaction Summary</h4>
-                                    <button className='footer waves-effect waves-light btn blue lighten-2' onClick={lock}>Lock</button>
+                                <div className="tracker-summary">
+                                    <h6>Summary</h6>
                                 </div>
                                 {
                                     <Summary reload={false} trackerId={TrackerId} />
                                 }
                             </section>
-                            <section>
-
-                                <Collapsible data={[{ label: "Deposite", content: <Form submit={(data) => submitTransaction(data, "deposite")} deposite /> }, { label: "Withdraw", content: <Form submit={(data) => submitTransaction(data, "withdraw")} /> }]} />
-                            </section>
+                            {!isHistory &&
+                                <section>
+                                    <h6>Add Transaction </h6>
+                                    <Collapsible data={[{ label: "Deposite", content: <Form submit={(data) => submitTransaction(data, "deposite")} deposite /> }, { label: "Withdraw", content: <Form submit={(data) => submitTransaction(data, "withdraw")} /> }]} />
+                                </section>
+                            }
                             <hr />
                             <section>
-                                <h4>Transaction</h4>
+                                <h6>Transaction History</h6>
                                 {
                                     transactions.length > 0 ? (
-                                        <Table responsive columns={columns} rows={transactions} />
+                                        <Table responsive columns={isHistory ? TransactionColumnsHistory : TransactionColumns} rows={transactions}  />
                                     ) : (<div>No Data </div>)
                                 }
                             </section>
