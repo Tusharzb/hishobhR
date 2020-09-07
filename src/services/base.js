@@ -3,8 +3,9 @@ import axios from 'axios'
 const baseUrl = "https://hishobh.herokuapp.com";
 // const baseUrl = "http://localhost:5000";
 
-export const getTrackers = (userID,payload={}) =>{
-    return axios.post(`${baseUrl}/api/tracker/${userID}`,payload);
+export const getTrackers = (userID) =>{
+    console.log(baseUrl);
+    return axios.post(`${baseUrl}/api/tracker/${userID}`);
 }
 
 export const getTransactions = (TrackerId) =>{
@@ -25,8 +26,4 @@ export const createTracker = (data) =>{
 
 export const removeTransaction = (transactionId) =>{
     return axios.delete(`${baseUrl}/api/transactions/${transactionId}`);
-}
-
-export const lockTracker = (payload) =>{
-    return axios.post(`${baseUrl}/api/tracker/lock`,payload);
 }

@@ -22,6 +22,32 @@ const Transactions = (props) => {
     const [transactions, setTransactions] = useState([]);
     const [isLoading, setisLoading] = useState(true);
     const [summaryReload, setsummaryReload] = useState(false);
+    const [columns, setcolumns] = useState([{
+        label: "Reason",
+        key: "reason"
+    },
+    {
+        label: 'Category',
+        key: 'category'
+    },
+    {
+        label: "Withdraw",
+        key: "withdraw"
+    },
+    {
+        label: "Deposite",
+        key: "deposite"
+    },
+    {
+        label: "Created",
+        key: "createdOn",
+        type:"date"
+    },
+    {
+        label: "Action",
+        key: "action"
+    }]);
+
 
     const [TrackerId, setTrackerId] = useState("");
 
