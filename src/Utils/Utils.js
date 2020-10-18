@@ -6,6 +6,7 @@ export const categories = [
     "Salary",
     "Electronics",
     "Games",
+    "Investment",
     "Food",
     "Travel",
     "Shopping",
