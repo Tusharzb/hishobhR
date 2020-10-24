@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 
-import { getTrackers } from '../../services/base';
+import { getTrackers } from '../../Services/base';
 import moment from 'moment';
 import Card from "../../Components/Card/Card";
 

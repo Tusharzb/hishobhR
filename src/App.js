@@ -7,6 +7,7 @@ import Header from "./components/Header/Header";
 
 
 class App extends React.Component {
+  componentDidMount(){}
   render() {
     return (
       <div >

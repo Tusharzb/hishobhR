@@ -125,8 +125,7 @@ const Transactions = (props) => {
 
     return (
         <div>
-            {
-                isLoading ? (
+            {isLoading ? (
                     <div className="progress">
                         <div className="indeterminate"></div>
                     </div>

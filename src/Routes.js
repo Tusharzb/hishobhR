@@ -6,6 +6,7 @@ import { Route, Switch, Redirect } from 'react-router-dom';
 import Home from './pages/Home/Home';
 import Transactions from './pages/Transactions/Transactions';
 import History from './pages/History/History';
+import Subscription from './pages/Subscription/Subscription';
 
 const Routes = (props) => {
     return (
@@ -15,6 +16,7 @@ const Routes = (props) => {
                 <Route exact path="/trackers" component={Home} />
                 <Route exact path="/history/:id" component={Transactions} />
                 <Route exact path="/history" component={History} />
+                <Route exact path="/subscription" component={Subscription} />
                 <Redirect exact from='/' to='/trackers' />
             </Switch>
         </div>

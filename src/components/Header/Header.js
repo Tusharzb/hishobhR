@@ -11,8 +11,8 @@ const Header = () => {
             <Link to="/" className="brand-logo">Hishobh</Link>
             <a href="#" data-target="mobile-demo" className="sidenav-trigger"><i className="material-icons">menu</i></a>
             <ul className="right menu hide-on-med-and-down">
+                <li><Link to="/subscription">Subscriptions</Link></li>
                 <li><Link to="/history">History</Link></li>
-              
             </ul>
             </div>
         </nav>
