@@ -8,6 +8,12 @@ import axios from 'axios';
 const Instance = axios.create({
     baseURL: 'https://hishobh.herokuapp.com',
     timeout: 50000,
+});
+
+Instance.interceptors.response.use(response => {
+    return response.data;
+}, (error) => {
+    return Promise.reject(error);
 })
 
 
@@ -40,5 +46,5 @@ export const createSubscription = (data) => {
 }
 
 export const getSubscription = (data) => {
-    return Instance.post(`/api/subscriptions/5f12d02af766c92214dd5eee`, data);
+    return Instance.get(`/api/subscriptions/5f12d02af766c92214dd5eee`);
 }

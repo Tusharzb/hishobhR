@@ -36,7 +36,7 @@ const Summary = (props) => {
         try {
             setisLoading(true)
             const response = await getTransactionSummary(trackerId);
-            const trackerSummary = (response.data.data || []);
+            const trackerSummary = (response.data || []);
             setTransactionSummary(trackerSummary);
             setisLoading(false)
         }

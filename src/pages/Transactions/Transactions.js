@@ -79,7 +79,7 @@ const Transactions = (props) => {
         try {
             const response = await getTransactions(Trackerid);
             console.log(response)
-            const transactions = (response.data.data || []);
+            const transactions = (response.data || []);
             transactions.forEach(element => {
                 element.action = <ActionRow deleteTransaction={() => deleteTransaction(element._id)} />;
             })
