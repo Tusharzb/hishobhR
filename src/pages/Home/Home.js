@@ -27,8 +27,9 @@ export default class Home extends Component {
       const userId = "5f12bf65af7273065c1a0700";
       const response = await getTrackers(userId);
       const trackers = response.data || [];
-      if (trackers.data.length > 0) {
-        this.setState({ trackers: trackers.data });
+      console.log({trackers});
+      if (trackers.length > 0) {
+        this.setState({ trackers: trackers });
       }
       this.setState({ isLoading: false });
     } catch (err) {

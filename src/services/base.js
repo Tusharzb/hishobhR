@@ -48,3 +48,7 @@ export const createSubscription = (data) => {
 export const getSubscription = (data) => {
     return Instance.get(`/api/subscriptions/5f12d02af766c92214dd5eee`);
 }
+
+export const deleteSubscription = (uid = "", sid = "") => {
+    return Instance.delete(`/api/subscriptions/5f12d02af766c92214dd5eee/${sid}`);
+}
