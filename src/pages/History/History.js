@@ -25,9 +25,9 @@ export default class History extends React.Component {
         try {
             const userId = "5f12bf65af7273065c1a0700";
             const response = await getTrackers(userId, { isHistory: true });
-            const trackers = response.data || [];
-            if (trackers.data.length > 0) {
-                this.setState({ trackers: trackers.data });
+            const trackers = response.data;
+            if (trackers.length > 0) {
+                this.setState({ trackers: trackers });
             }
             this.setState({ isLoading: false });
         } catch (err) {
@@ -49,7 +49,6 @@ export default class History extends React.Component {
 
     render() {
         const { isLoading, trackers } = this.state;
-        console.log("props", this.props)
         return (
             <div className="history-wrapper">
                 <section className="body-wrapper">
@@ -63,7 +62,7 @@ export default class History extends React.Component {
                             <div className="row">
                                 {trackers.map(item => (
                                     <div key={item._id} className="col s12 m4">
-                                        <Card createdOn={this.getDateOnly(item.createdOn)} title={item.name} id={item._id} content={item.description} action1={{ label: "Select", action: this.GoTo }} isHistory/>
+                                        <Card createdOn={this.getDateOnly(item.createdOn)} title={item.name} id={item._id} content={item.description} action1={{ label: "Select", action: this.GoTo }} isHistory />
                                     </div>
                                 ))}
                             </div>

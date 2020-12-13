@@ -5,8 +5,8 @@ import { Route, Switch, Redirect } from 'react-router-dom';
 // const Transactions = lazy(() => import('./pages/Transactions/Transactions'));
 import Home from './pages/Home/Home';
 import Transactions from './pages/Transactions/Transactions';
-import History from './pages/History/History';
 import Subscription from './pages/Subscription/Subscription';
+import History from './pages/History/History';
 
 const Routes = (props) => {
     return (

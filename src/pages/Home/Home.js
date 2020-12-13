@@ -64,7 +64,6 @@ export default class Home extends Component {
 
   render() {
     const { isLoading, trackers } = this.state;
-    console.log("props", this.props)
     return (
       <div>
         <div className="form-wrapper">

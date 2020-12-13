@@ -17,8 +17,8 @@ Instance.interceptors.response.use(response => {
 })
 
 
-export const getTrackers = (userID) => {
-    return Instance.post(`/api/tracker/${userID}`);
+export const getTrackers = (userID, data = {}) => {
+    return Instance.post(`/api/tracker/${userID}`, data);
 }
 
 export const getTransactions = (TrackerId) => {
@@ -38,7 +38,7 @@ export const createTracker = (data) => {
 }
 
 export const removeTransaction = (transactionId) => {
-    return Instance.delete(`${baseUrl}/api/transactions/${transactionId}`);
+    return Instance.delete(`/api/transactions/${transactionId}`);
 }
 
 export const createSubscription = (data) => {
@@ -51,4 +51,8 @@ export const getSubscription = (data) => {
 
 export const deleteSubscription = (uid = "", sid = "") => {
     return Instance.delete(`/api/subscriptions/5f12d02af766c92214dd5eee/${sid}`);
+}
+
+export const lockTracker = (trackerId) => {
+    return Instance.post(`/api/tracker/lock`, trackerId);
 }
