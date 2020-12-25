@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { categories } from '../../Utils/Utils';
+import Select from 'react-select';
+
 
 import './Form.style.scss';
 
@@ -24,6 +26,13 @@ const Form = (props) => {
             setAmount("")
         }
     }
+    const optionGenerator = (array) => {
+        return array.map(item => ({ value: item, label: item }))
+    }
+
+    const onCategorySelect=(option)=>{
+        setCategory(option.label);
+    }
 
     return (
         <div>
@@ -32,13 +41,13 @@ const Form = (props) => {
                     <input value={Reason} placeholder="reason" type="text" className="validate" onChange={e => setReason(e.target.value)} />
                 </div>
                 <div className="input-field col s12 m3">
-                    <select value={Category} placeholder="Select" onChange={e => setCategory(e.target.value)}>
-                        <option value=""  >Select Category</option>
-                        {categories.sort().map((item, key) => {
-                            return <option key={key} value={item} >{item}</option>
-                        })}
-                    </select>
-                    <label>Category Select</label>
+                    <Select
+                        className="single-select"
+                        classNamePrefix="select"
+                        onChange={onCategorySelect}
+                        options={optionGenerator(categories)}
+                        placeholder="Select Category"
+                    />
                 </div>
                 <div className="input-field col s12 m3">
                     <input value={Amount} placeholder="amount" type="number" className="validate" onChange={e => setAmount(e.target.value)} />

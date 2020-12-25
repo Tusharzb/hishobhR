@@ -1,3 +1,29 @@
+.single-select {
+    margin-top: 7px;
+
+    .select__control {
+        height: 40px;
+        border: none;
+        border-bottom: 1px solid rgb(170, 170, 170);
+        border-radius: 0;
+        box-shadow: none;
+        outline: none;
+    }
+
+    .select__value-container {
+        height: inherit;
+    }
+
+    .select__indicators {
+        .select__indicator-separator {
+            display: none;
+        }
+    }
+}
+
+
 .footer {
     margin-top: 20px;
+
+
 }
