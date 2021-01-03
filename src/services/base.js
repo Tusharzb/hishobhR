@@ -1,8 +1,8 @@
 
 import axios from 'axios';
 
-const baseUrl = "https://hishobh.herokuapp.com";
-// const baseUrl = "http://localhost:5000";
+// const baseUrl = "https://hishobh.herokuapp.com";
+const baseUrl = "http://localhost:5000";
 
 
 const Instance = axios.create({
@@ -30,7 +30,7 @@ export const getTransactionSummary = (TrackerId) => {
 }
 
 export const saveTransactionSummary = (TrackerId, data) => {
-    return Instance.post(`/api/transactions/${TrackerId}`, data);
+    return Instance.post(`/api/transactions/create/${TrackerId}`, data);
 }
 
 export const createTracker = (data) => {

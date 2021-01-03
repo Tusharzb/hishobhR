@@ -50,7 +50,7 @@ const Form = (props) => {
                     />
                 </div>
                 <div className="input-field col s12 m3">
-                    <input value={Amount} placeholder="amount" type="number" className="validate" onChange={e => setAmount(e.target.value)} />
+                    <input value={Amount} placeholder="amount" type="Number" className="validate" onChange={e => setAmount(e.target.value)} />
                 </div>
                 <div className="col s12 m2">
                     <button className={`footer waves-effect waves-light btn ${props.deposite ? 'green lighten-2' : 'red lighten-2'}`} onClick={submit}>Add</button>
