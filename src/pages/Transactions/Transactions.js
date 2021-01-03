@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-
+import { connect } from 'react-redux';
 import Table from '../../Components/Table/Table';
 import Collapsible from '../../Components/Collapsible/Collapsible';
 import Form from '../../Components/Form/Form';
@@ -9,6 +9,7 @@ import { TransactionColumns, TransactionColumnsHistory } from '../../Utils/Utils
 import { getTransactions, saveTransactionSummary, removeTransaction, lockTracker } from '../../Services/base';
 
 import './Transaction.style.scss';
+import Analysis from '../../components/Analysis/Analysis';
 
 
 const ActionRow = (props) => {
@@ -41,7 +42,7 @@ const Transactions = (props) => {
     {
         label: "Created",
         key: "createdOn",
-        type:"date"
+        type: "date"
     },
     {
         label: "Action",
@@ -53,15 +54,14 @@ const Transactions = (props) => {
 
     const id = props.match.params.id;
     const { tracker, isHistory } = props.location.state;
+    const { filter } = props;
     useEffect(() => {
         setTrackerId(id)
         loadData(id);
-        console.log("tracker", JSON.parse(localStorage.getItem('activeTracker')));
-        console.log("tracker from state", tracker);
         return () => {
             localStorage.clear('activeTracker');
         }
-    }, [])
+    }, [filter])
 
     const deleteTransaction = async (transactionId) => {
         try {
@@ -75,12 +75,12 @@ const Transactions = (props) => {
     }
 
     const loadData = async (Trackerid) => {
-        setisLoading(true);
+        // setisLoading(true);
         try {
-            const response = await getTransactions(Trackerid);
-            console.log(response)
-            const transactions = (response.data || []);
-            transactions.forEach(element => {
+            const response = await getTransactions(Trackerid, filter);
+            const transactions = response.data || [];
+            console.log(response.data)
+            transactions && transactions.forEach(element => {
                 element.action = <ActionRow deleteTransaction={() => deleteTransaction(element._id)} />;
             })
             setTransactions(transactions);
@@ -126,47 +126,54 @@ const Transactions = (props) => {
     return (
         <div>
             {isLoading ? (
-                    <div className="progress">
-                        <div className="indeterminate"></div>
-                    </div>
-                ) : (
-                        <div className="transaction-wrapper">
-                            <section className="tracker-header">
-                                <div>
-                                    <h5>{tracker.name}</h5>
-                                    <p>{tracker.description}</p>
-                                </div>
-                                {!isHistory ?
-                                    <button className='footer waves-effect waves-light btn blue lighten-2' onClick={lock}>Lock</button> : <div></div>
-                                }
-                            </section>
-                            <section>
-                                <div className="tracker-summary">
-                                    <h6>Summary</h6>
-                                </div>
-                                {
-                                    <Summary reload={false} trackerId={TrackerId} />
-                                }
-                            </section>
-                            {!isHistory &&
-                                <section>
-                                    <h6>Add Transaction </h6>
-                                    <Collapsible data={[{ label: "Deposite", content: <Form submit={(data) => submitTransaction(data, "deposite")} deposite /> }, { label: "Withdraw", content: <Form submit={(data) => submitTransaction(data, "withdraw")} /> }]} />
-                                </section>
+                <div className="progress">
+                    <div className="indeterminate"></div>
+                </div>
+            ) : (
+                    <div className="transaction-wrapper">
+                        <section className="tracker-header">
+                            <div>
+                                <h5>{tracker.name}</h5>
+                                <p>{tracker.description}</p>
+                            </div>
+                            {!isHistory ?
+                                <button className='footer waves-effect waves-light btn blue lighten-2' onClick={lock}>Lock</button> : <div></div>
                             }
-                            <hr />
+                        </section>
+                        <section>
+                            <div className="tracker-summary">
+                                <h6>Summary</h6>
+                            </div>
+                            {
+                                <Summary reload={false} trackerId={TrackerId} />
+                            }
+                        </section>
+                        {!isHistory &&
                             <section>
-                                <h6>Transaction History</h6>
-                                {
-                                    transactions.length > 0 ? (
-                                        <Table responsive columns={isHistory ? TransactionColumnsHistory : TransactionColumns} rows={transactions}  />
-                                    ) : (<div>No Data </div>)
-                                }
+                                <h6>Add Transaction </h6>
+                                <Collapsible data={[{ label: "Deposite", content: <Form submit={(data) => submitTransaction(data, "deposite")} deposite /> }, { label: "Withdraw", content: <Form submit={(data) => submitTransaction(data, "withdraw")} /> }]} />
                             </section>
-                        </div>
-                    )}
+                        }
+                        <hr />
+                        <Analysis />
+                        <section>
+                            <h6>Transaction History</h6>
+                            {
+                                transactions.length > 0 ? (
+                                    <Table responsive columns={isHistory ? TransactionColumnsHistory : TransactionColumns} rows={transactions} />
+                                ) : (<div>No Data </div>)
+                            }
+                        </section>
+                    </div>
+                )}
         </div>
     )
 }
 
-export default Transactions
+const mapStateToProps = (state) => {
+    return {
+        filter: state.filter
+    }
+}
+
+export default connect(mapStateToProps)(Transactions);

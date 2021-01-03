@@ -2,11 +2,11 @@
 import axios from 'axios';
 
 // const baseUrl = "https://hishobh.herokuapp.com";
-// const baseUrl = "http://localhost:5000";
+const baseUrl = "http://localhost:5000";
 
 
 const Instance = axios.create({
-    baseURL: 'https://hishobh.herokuapp.com',
+    baseURL: baseUrl,
     timeout: 50000,
 });
 
@@ -21,8 +21,8 @@ export const getTrackers = (userID, data = {}) => {
     return Instance.post(`/api/tracker/${userID}`, data);
 }
 
-export const getTransactions = (TrackerId) => {
-    return Instance.get(`/api/transactions/${TrackerId}`);
+export const getTransactions = (TrackerId, payload) => {
+    return Instance.post(`/api/transactions/${TrackerId}`, { filter: payload });
 }
 
 export const getTransactionSummary = (TrackerId) => {
@@ -55,4 +55,8 @@ export const deleteSubscription = (uid = "", sid = "") => {
 
 export const lockTracker = (trackerId) => {
     return Instance.post(`/api/tracker/lock`, trackerId);
+}
+
+export const filterTransaction = (trackerId, payload) => {
+    return Instance.post(`/api/transactions/filter${trackerId}`, payload);
 }

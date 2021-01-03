@@ -5,5 +5,14 @@ import '../public/css/materialize.min.css';
 import './index.style.scss';
 import '../public/js/bin/materialize.min.js';
 // import "../public/js/bin/materialize";
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
+import { combineForms } from 'react-redux-form';
 
-ReactDom.render(<App />, document.getElementById('root'))
+const filter = {};
+
+const store = createStore(combineForms({
+    filter,
+}));
+
+ReactDom.render(<Provider store={store}><App /></Provider>, document.getElementById('root'))
