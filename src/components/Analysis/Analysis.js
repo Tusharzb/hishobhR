@@ -25,7 +25,7 @@ class AnalysisImp extends Component {
             this.setState({ filter: { ...filter, "category": option.value } });
             formChange("filter.category", option.value);
         } else {
-            formChange("filter.category", null);
+            formChange("filter.category", undefined);
         }
 
     }
