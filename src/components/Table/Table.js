@@ -1,21 +1,22 @@
 import React, { useEffect } from 'react'
 import moment from 'moment';
+import './Table.style.scss';
+const DEFAULT_CLASSNAME = "trasaction-table"
 
 const Table = (props) => {
-    const { columns, rows } = props;
-
-    useEffect(() => {
-        console.log({ columns })
-        console.log({rows})
-    }, [columns])
+    const { columns, rows, showTotal } = props;
 
     const formatDate = (value) => {
         return moment(value).format('MMMM Do YYYY');
     }
 
+    const findTotal = (data, key) => {
+        return data.reduce((a, b) => a += b[key], 0)
+    }
+
     return (
 
-        <div className="row">
+        <div className={`row ${DEFAULT_CLASSNAME}`}>
             <div className="col s12">
                 <table className={`${props.responsive ? 'responsive-table  highlight' : 'table  highlight'}`}>
                     <thead>
@@ -33,6 +34,15 @@ const Table = (props) => {
                                     : ""} </td>))) : ""}
                             </tr>
                         ))) : (<tr ></tr>)}
+                        {showTotal && (rows && rows.length) > 0 &&
+                            <tr>
+                                <td>Total</td>
+                                <td></td>
+                                <td><h6 className={`${DEFAULT_CLASSNAME}-withdraw`}>{findTotal(rows, "withdraw")}</h6></td>
+                                <td><h6 className={`${DEFAULT_CLASSNAME}-deposite`}>{findTotal(rows, "deposite")}</h6></td>
+                                <td></td>
+                            </tr>
+                        }
                     </tbody>
                 </table>
             </div>

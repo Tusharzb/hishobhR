@@ -160,7 +160,7 @@ const Transactions = (props) => {
                             <h6>Transaction History</h6>
                             {
                                 transactions.length > 0 ? (
-                                    <Table responsive columns={isHistory ? TransactionColumnsHistory : TransactionColumns} rows={transactions} />
+                                    <Table showTotal responsive columns={isHistory ? TransactionColumnsHistory : TransactionColumns} rows={transactions} />
                                 ) : (<div>No Data </div>)
                             }
                         </section>
