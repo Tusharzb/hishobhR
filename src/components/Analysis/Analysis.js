@@ -30,6 +30,11 @@ class AnalysisImp extends Component {
 
     }
 
+    componentWillUnmount(){
+        const { formReset } = this.props;
+        formReset();
+    }
+
     validate = (value) => {
         if (value === "") {
             return undefined;

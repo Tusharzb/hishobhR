@@ -34,6 +34,11 @@ export const TransactionColumns = [
         key: "deposite"
     },
     {
+        label: "Created Date",
+        key: "createdOn",
+        type: "date"
+    },
+    {
         label: "Action (Rs)",
         key: "action"
     }]
@@ -54,7 +59,13 @@ export const TransactionColumnsHistory = [
     {
         label: "Deposite",
         key: "deposite"
-    }];
+    },
+    {
+        label: "Created Date",
+        key: "createdOn",
+        type: "date"
+    }
+];
 
 export const SubscriptionColumns = [
     {

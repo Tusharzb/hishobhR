@@ -5,16 +5,32 @@
     height: 150px;
     color: black;
     font-weight: 400;
+
     .card-title {
       color: black;
       font-weight: 500;
     }
   }
+
   .card-footer {
     height: 10%;
     display: flex;
     direction: row;
     justify-content: space-between;
     align-items: center;
+  }
+
+  .card-summary {
+    .collapsible {
+      margin: 0;
+      border: none;
+      box-shadow: none;
+    }
+
+    .collapsible-header {
+      background: transparent !important;
+      border: none;
+      box-shadow: none;
+    }
   }
 }

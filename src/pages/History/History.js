@@ -1,10 +1,13 @@
 import React, { useEffect } from 'react'
-
-import { getTrackers } from '../../Services/base';
+import { connect } from 'react-redux';
+import { getTrackers, getTransactions } from '../../Services/base';
 import moment from 'moment';
 import Card from "../../Components/Card/Card";
+import Analysis from '../../components/Analysis/Analysis';
+import { TransactionColumnsHistory, TransactionColumns } from '../../Utils/Utils';
+import Table from '../../Components/Table/Table';
 
-export default class History extends React.Component {
+class History extends React.Component {
 
     constructor(props) {
         super(props);
@@ -13,11 +16,30 @@ export default class History extends React.Component {
             isLoading: true,
             title: '',
             description: '',
+            transactions: []
         };
     }
 
     componentDidMount() {
         this.loadData();
+    }
+
+    componentDidUpdate(prevProps) {
+        const { filter } = this.props;
+        if (Object.keys(filter).length > 0 && filter !== prevProps.filter) {
+            this.loadFilterData();
+        }
+    }
+
+    loadFilterData = async () => {
+        const { filter } = this.props;
+        try {
+            const response = await getTransactions("", filter);
+            const transactions = response.data || [];
+            this.setState({ transactions });
+        } catch (err) {
+            console.log(err);
+        }
     }
 
     loadData = async () => {
@@ -48,10 +70,14 @@ export default class History extends React.Component {
     }
 
     render() {
-        const { isLoading, trackers } = this.state;
+        const { isLoading, trackers, transactions } = this.state;
         return (
             <div className="history-wrapper">
                 <section className="body-wrapper">
+                    <Analysis />
+                    {transactions.length > 0 ?
+                        <Table showTotal responsive columns={TransactionColumnsHistory} rows={transactions} />
+                    :<i>Data not found...</i>}
                     <h4>Locked Trackers</h4>
                     {
                         isLoading ? (
@@ -62,7 +88,7 @@ export default class History extends React.Component {
                             <div className="row">
                                 {trackers.map(item => (
                                     <div key={item._id} className="col s12 m4">
-                                        <Card createdOn={this.getDateOnly(item.createdOn)} title={item.name} id={item._id} content={item.description} action1={{ label: "Select", action: this.GoTo }} isHistory />
+                                        <Card  createdOn={this.getDateOnly(item.createdOn)} title={item.name} id={item._id} content={item.description} action1={{ label: "Select", action: this.GoTo }} isHistory />
                                     </div>
                                 ))}
                             </div>
@@ -75,3 +101,11 @@ export default class History extends React.Component {
         );
     }
 }
+
+const mapStateToProps = (state) => {
+    return {
+        filter: state.filter
+    }
+}
+
+export default connect(mapStateToProps, null)(History);
