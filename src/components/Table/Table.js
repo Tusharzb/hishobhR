@@ -11,7 +11,7 @@ const Table = (props) => {
     }
 
     const findTotal = (data, key) => {
-        return data.reduce((a, b) => a += b[key], 0)
+        return Math.round(data.reduce((a, b) => a += b[key], 0));
     }
 
     return (
