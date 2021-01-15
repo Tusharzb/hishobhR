@@ -71,13 +71,14 @@ class History extends React.Component {
 
     render() {
         const { isLoading, trackers, transactions } = this.state;
+        const { filter } = this.props;
         return (
             <div className="history-wrapper">
                 <section className="body-wrapper">
                     <Analysis />
-                    {transactions.length > 0 ?
+                    {transactions.length > 0 && Object.keys(filter).length > 0 ?
                         <Table showTotal responsive columns={TransactionColumnsHistory} rows={transactions} />
-                    :<i>Data not found...</i>}
+                        : <i>Data not found...</i>}
                     <h4>Locked Trackers</h4>
                     {
                         isLoading ? (
@@ -88,7 +89,7 @@ class History extends React.Component {
                             <div className="row">
                                 {trackers.map(item => (
                                     <div key={item._id} className="col s12 m4">
-                                        <Card  createdOn={this.getDateOnly(item.createdOn)} title={item.name} id={item._id} content={item.description} action1={{ label: "Select", action: this.GoTo }} isHistory />
+                                        <Card createdOn={this.getDateOnly(item.createdOn)} title={item.name} id={item._id} content={item.description} action1={{ label: "Select", action: this.GoTo }} isHistory />
                                     </div>
                                 ))}
                             </div>
