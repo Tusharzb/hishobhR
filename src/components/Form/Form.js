@@ -1,19 +1,26 @@
 import React, { useEffect, useState } from 'react'
-import { categories } from '../../Utils/Utils';
+// import { categories } from '../../Utils/Utils';
 import Select from 'react-select';
 
 
 import './Form.style.scss';
+import { getCategories } from '../../services/base';
 
 const Form = (props) => {
     const [Reason, setReason] = useState("");
     const [Category, setCategory] = useState('');
     const [Amount, setAmount] = useState("");
+    const [Categories, setCategories] = useState([]);
 
-
+    const loadData = async () => {
+        const respsonse = await getCategories();
+        const categories = respsonse.data ? respsonse.data : [];
+        setCategories(categories)
+    }
     let instances = "";
     useEffect(() => {
         instances = M.FormSelect.init(document.querySelectorAll('select'), {});
+        loadData();
     }, [])
 
     const submit = () => {
@@ -27,10 +34,10 @@ const Form = (props) => {
         }
     }
     const optionGenerator = (array) => {
-        return array.map(item => ({ value: item, label: item }))
+        return array.map(item => ({ value: item.name, label: item.name }))
     }
 
-    const onCategorySelect=(option)=>{
+    const onCategorySelect = (option) => {
         setCategory(option.label);
     }
 
@@ -41,13 +48,13 @@ const Form = (props) => {
                     <input value={Reason} placeholder="reason" type="text" className="validate" onChange={e => setReason(e.target.value)} />
                 </div>
                 <div className="input-field col s12 m3">
-                    <Select
+                    {Categories.length > 0 && < Select
                         className="single-select"
                         classNamePrefix="select"
                         onChange={onCategorySelect}
-                        options={optionGenerator(categories)}
+                        options={optionGenerator(Categories)}
                         placeholder="Select Category"
-                    />
+                    />}
                 </div>
                 <div className="input-field col s12 m3">
                     <input value={Amount} placeholder="amount" type="Number" className="validate" onChange={e => setAmount(e.target.value)} />

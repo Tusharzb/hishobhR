@@ -7,6 +7,7 @@ import Home from './pages/Home/Home';
 import Transactions from './pages/Transactions/Transactions';
 import Subscription from './pages/Subscription/Subscription';
 import History from './pages/History/History';
+import Admin from './pages/Admin/Admin';
 
 const Routes = (props) => {
     return (
@@ -17,6 +18,7 @@ const Routes = (props) => {
                 <Route exact path="/history/:id" component={Transactions} />
                 <Route exact path="/history" component={History} />
                 <Route exact path="/subscription" component={Subscription} />
+                <Route exact path="/admin" component={Admin} />
                 <Redirect exact from='/' to='/trackers' />
             </Switch>
         </div>

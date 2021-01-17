@@ -14,6 +14,7 @@ const Header = () => {
                         <ul className="right menu hide-on-med-and-down">
                             <li><Link to="/subscription">Subscriptions</Link></li>
                             <li><Link to="/history">History</Link></li>
+                            <li><Link to="/admin">Admin</Link></li>
                         </ul>
                     </div>
                 </div>

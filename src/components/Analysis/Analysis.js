@@ -4,14 +4,26 @@ import Select from 'react-select';
 import { categories } from '../../Utils/Utils';
 import { connect } from 'react-redux';
 import { Control, Form, actions } from 'react-redux-form';
+import { getCategories } from '../../services/base';
 
 class AnalysisImp extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            filter: {}
+            filter: {},
+            categories: []
         }
+    }
+
+    componentDidMount() {
+        this.loadData();
+    }
+
+    loadData = async () => {
+        const respsonse = await getCategories();
+        const categories = respsonse.data ? respsonse.data : [];
+        this.setState({ categories });
     }
 
     optionGenerator = (array) => {
@@ -30,7 +42,7 @@ class AnalysisImp extends Component {
 
     }
 
-    componentWillUnmount(){
+    componentWillUnmount() {
         const { formReset } = this.props;
         formReset();
     }
@@ -43,13 +55,18 @@ class AnalysisImp extends Component {
         }
     }
 
+    optionGenerator = (array) => {
+        return array.map(item => ({ value: item.name, label: item.name }))
+    }
+
     reset = (e) => {
-        e.preventDefault()  
+        e.preventDefault()
         this.props.formReset();
     }
 
 
     render() {
+        const { categories } = this.state;
         return (
             <Form model="filter">
                 <div className="row" >

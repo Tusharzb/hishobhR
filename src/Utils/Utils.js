@@ -89,3 +89,19 @@ export const SubscriptionColumns = [
         key: "action"
     }
 ]
+
+export const CategoryColumns = [
+    {
+        label: "Name",
+        key: "name"
+    },
+    {
+        label: "created Date",
+        key: "createdOn",
+        type: "date"
+    },
+    {
+        label: "Action",
+        key: "action"
+    }
+]
