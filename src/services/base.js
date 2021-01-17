@@ -1,8 +1,8 @@
 
 import axios from 'axios';
 
-// const baseUrl = "https://hishobh.herokuapp.com";
-const baseUrl = "http://localhost:5000";
+const baseUrl = "https://hishobh.herokuapp.com";
+// const baseUrl = "http://localhost:5000";
 
 
 const Instance = axios.create({
@@ -60,3 +60,24 @@ export const lockTracker = (trackerId) => {
 export const filterTransaction = (trackerId, payload) => {
     return Instance.post(`/api/transactions/filter${trackerId}`, payload);
 }
+
+
+export const getCategories = () => {
+    return Instance.get(`/api/category`);
+}
+
+export const addCategory = (payload) => {
+    return Instance.post(`/api/category`, payload);
+}
+
+export const updateCategory = (categoryId, payload) => {
+    return Instance.post(`/api/category/${categoryId}`, payload);
+}
+
+export const deleteCategory = (categoryId) => {
+    return Instance.delete(`/api/category/${categoryId}`);
+}
+
+
+
+
