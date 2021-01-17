@@ -22,12 +22,12 @@
         &::before {
             content: "Category";
             position: absolute;
-            top: -14px;
+            top: -17px;
             z-index: 10;
             background-color: white;
             font-size: 20px;
             font-weight: bold;
-            left: 40%;
+            left: 10%;
         }
 
         .single-select {
