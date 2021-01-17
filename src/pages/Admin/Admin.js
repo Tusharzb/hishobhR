@@ -4,6 +4,7 @@ import Select from 'react-select';
 import { getCategories, deleteCategory, addCategory } from '../../services/base';
 import { CategoryColumns } from '../../Utils/Utils';
 import Table from '../../components/Table/Table';
+import { CircleLoader } from '../../components/Loader/Loader';
 const DEFAULT_CLASSNAME = "admin"
 
 const ActionRow = (props) => {
@@ -32,16 +33,20 @@ class Admin extends Component {
         this.setState({ newCategory: text })
     }
 
-    deleteCategory = async (_id) => {
-        await deleteCategory(element._id);
-        this.loadData();
+    deleteCategory = async (id) => {
+        try {
+            await deleteCategory(id);
+            this.loadData();
+        } catch (err) {
+            console.log(err)
+        }
     }
 
     loadData = async () => {
-        const respsonse = await getCategories()
+        const respsonse = await getCategories();
         const categories = respsonse.data ? respsonse.data : [];
         categories && categories.forEach(element => {
-            element.action = <ActionRow deleteCategory={() => deleteCategory(element._id)} />;
+            element.action = <ActionRow deleteCategory={() => this.deleteCategory(element._id)} />;
         })
         this.setState({ categories, isLoading: false })
     }
@@ -66,28 +71,33 @@ class Admin extends Component {
         this.setState({ showCategory: value });
     }
 
+    renderTable = (showCategory) => {
+        const { categories } = this.state;
+        return (
+            showCategory ?
+                (<React.Fragment>
+                    < Table responsive columns={CategoryColumns} rows={categories} />
+                    <a className="link" onClick={() => this.showCategory(false)}>hide all</a>
+                </React.Fragment >) :
+                <a className="link" onClick={() => this.showCategory(true)}>Show all</a>)
+    }
+
 
     render() {
-        const { newCategory, categories, showCategory } = this.state;
+        const { newCategory, categories, showCategory, isLoading } = this.state;
         return (
             <div className={DEFAULT_CLASSNAME}>
                 <div className={`${DEFAULT_CLASSNAME}-category`}>
-                    <Select
+                    {/* <Select
                         className="single-select"
                         classNamePrefix="select"
                         onChange={this.onCategorySelect}
                         options={this.optionGenerator(categories)}
                         placeholder="Search a Category"
-                    />
+                    /> */}
                     <input className="inputCategory" placeholder="add category" onChange={(e) => this.handelInput(e.target.value)} value={newCategory} />
                     <button className={`footer waves-effect waves-light btn`} onClick={this.submit}>Add</button>
-                    {categories && showCategory ?
-                        <React.Fragment>
-                            <Table responsive columns={CategoryColumns} rows={categories} />
-                            <a className="link" onClick={() => this.showCategory(false)}>hide all</a>
-                        </React.Fragment>
-                        : <a className="link" onClick={() => this.showCategory(true)}>Show all</a>
-                    }
+                    {this.renderTable(showCategory)}
                 </div>
 
             </div>
