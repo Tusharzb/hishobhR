@@ -2,9 +2,12 @@ import React, { useEffect } from 'react'
 import moment from 'moment';
 import './Table.style.scss';
 const DEFAULT_CLASSNAME = "trasaction-table"
+import PropTypes from 'prop-types';
+
+
 
 const Table = (props) => {
-    const { columns, rows, showTotal } = props;
+    const { columns, rows, showTotal, customClass } = props;
 
     const formatDate = (value) => {
         return moment(value).format('MMMM Do YYYY');
@@ -16,7 +19,7 @@ const Table = (props) => {
 
     return (
 
-        <div className={`row ${DEFAULT_CLASSNAME}`}>
+        <div className={`row ${DEFAULT_CLASSNAME} ${customClass}`}>
             <div className="col s12">
                 <table className={`${props.responsive ? 'responsive-table  highlight' : 'table  highlight'}`}>
                     <thead>
@@ -48,6 +51,14 @@ const Table = (props) => {
             </div>
         </div>
     )
+}
+
+Table.propTypes = {
+    customClass: PropTypes.string,
+    columns: PropTypes.array,
+    rows: PropTypes.array,
+    showTotal: PropTypes.bool
+
 }
 
 
