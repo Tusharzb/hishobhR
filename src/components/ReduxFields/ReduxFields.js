@@ -1,7 +1,9 @@
 import React, { useEffect } from 'react'
 import { Control } from 'react-redux-form';
+import PropTypes from 'prop-types';
 
-export function ReduxFields(props) {
+
+function ReduxFields(props) {
     const { field } = props;
     let instances = "";
     useEffect(() => {
@@ -38,3 +40,11 @@ export function ReduxFields(props) {
         </div>
     )
 }
+
+
+ReduxFields.PropTypes = {
+    data: PropTypes.array,
+    className: PropTypes.string
+}
+
+export default ReduxFields;

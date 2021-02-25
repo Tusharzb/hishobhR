@@ -1,16 +1,21 @@
 import React, { Component } from 'react';
-import './Admin.style.scss';
-import Select from 'react-select';
-import { getCategories, deleteCategory, addCategory } from '../../services/base';
-import { CategoryColumns } from '../../Utils/Utils';
 import Table from '../../components/Table/Table';
-import { CircleLoader } from '../../components/Loader/Loader';
+import { addCategory, deleteCategory, getCategories } from '../../services/base';
+import { CategoryColumns } from '../../Utils/Utils';
+import './Admin.style.scss';
+import PropTypes from 'prop-types';
+
 const DEFAULT_CLASSNAME = "admin"
 
 const ActionRow = (props) => {
     return (
         <button onClick={() => props.deleteCategory()} className="waves-effect waves-light btn red lighten-2">Delete</button>
     )
+}
+
+
+ActionRow.PropTypes = {
+    deleteCategory: PropTypes.func
 }
 
 class Admin extends Component {
@@ -84,17 +89,10 @@ class Admin extends Component {
 
 
     render() {
-        const { newCategory, categories, showCategory, isLoading } = this.state;
+        const { newCategory, showCategory } = this.state;
         return (
             <div className={DEFAULT_CLASSNAME}>
                 <div className={`${DEFAULT_CLASSNAME}-category`}>
-                    {/* <Select
-                        className="single-select"
-                        classNamePrefix="select"
-                        onChange={this.onCategorySelect}
-                        options={this.optionGenerator(categories)}
-                        placeholder="Search a Category"
-                    /> */}
                     <input className="inputCategory" placeholder="add category" onChange={(e) => this.handelInput(e.target.value)} value={newCategory} />
                     <button className={`footer waves-effect waves-light btn`} onClick={this.submit}>Add</button>
                     {this.renderTable(showCategory)}
@@ -104,5 +102,6 @@ class Admin extends Component {
         );
     }
 }
+
 
 export default Admin;

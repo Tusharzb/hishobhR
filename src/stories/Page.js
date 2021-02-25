@@ -59,7 +59,7 @@ export const Page = ({ user, onLogin, onLogout, onCreateAccount }) => (
     </section>
   </article>
 );
-Page.propTypes = {
+Page.PropTypes = {
   user: PropTypes.shape({}),
   onLogin: PropTypes.func.isRequired,
   onLogout: PropTypes.func.isRequired,

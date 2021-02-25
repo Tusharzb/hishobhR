@@ -1,7 +1,8 @@
-import React,{useState,useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import Table from '../Table/Table';
 import { getTransactionSummary } from '../../Services/base';
 import { CircleLoader } from '../Loader/Loader';
+import PropTypes from 'prop-types';
 
 
 
@@ -28,9 +29,9 @@ const Summary = (props) => {
 
     useEffect(() => {
         loaddData(trackerId)
-    }, [trackerId,reload])
+    }, [trackerId, reload])
 
-    
+
 
     const loaddData = async (trackerId) => {
         try {
@@ -45,18 +46,21 @@ const Summary = (props) => {
         }
     }
 
-
     return (
         <div>
-
-            {isLoading ? 
-                    <CircleLoader/> : 
+            {isLoading ?
+                <CircleLoader /> :
                 TransactionSummary.length > 0 ? (
                     <Table columns={trackerSummary} rows={TransactionSummary} />
                 ) : (<div>No Data </div>)
             }
         </div>
     )
+}
+
+Summary.PropTypes = {
+    trackerId: PropTypes.number,
+    reload: PropTypes.func
 }
 
 export default Summary;

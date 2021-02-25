@@ -10,12 +10,16 @@ import { getTransactions, saveTransactionSummary, removeTransaction, lockTracker
 
 import './Transaction.style.scss';
 import Analysis from '../../components/Analysis/Analysis';
-
+import PropTypes from 'prop-types';
 
 const ActionRow = (props) => {
     return (
         <button onClick={() => props.deleteTransaction()} className="waves-effect waves-light btn red lighten-2">Delete</button>
     )
+}
+
+ActionRow.PropTypes = {
+    deleteTransaction: PropTypes.func
 }
 
 
@@ -122,51 +126,82 @@ const Transactions = (props) => {
         }
     }
 
+    const renderTransactionHistory = (isHistory, TransactionColumnsHistory, transactions, TransactionColumns) => {
+        return (
+            <section>
+                <h6>Transaction History</h6>
+                {
+                    transactions.length > 0 ? (
+                        <Table customClass="transactions" showTotal responsive columns={isHistory ? TransactionColumnsHistory : TransactionColumns} rows={transactions} />
+                    ) : (<div>No Data </div>)
+                }
+            </section>
+        )
+    }
+
+    const renderTransactions = (isHistory) => {
+        return (
+            !isHistory &&
+            <section>
+                <h6>Add Transaction </h6>
+                <Collapsible data={[{ label: "Deposite", content: <Form submit={(data) => submitTransaction(data, "deposite")} deposite /> }, { label: "Withdraw", content: <Form submit={(data) => submitTransaction(data, "withdraw")} /> }]} />
+            </section>
+        )
+    }
+
+    const renderSummary = (TrackerId) => {
+        return (
+            <section>
+                <div className="tracker-summary">
+                    <h6>Summary</h6>
+                </div>
+                {
+                    <Summary reload={false} trackerId={TrackerId} />
+                }
+            </section>
+        )
+    }
+
+
+    const renderTrackerInfo = (tracker, lock) => {
+        return (
+            <section className="tracker-header">
+                <div>
+                    <h5>{tracker.name}</h5>
+                    <p>{tracker.description}</p>
+                </div>
+                {!isHistory ?
+                    <button className='footer waves-effect waves-light btn blue lighten-2' onClick={lock}>Lock</button> : <div></div>
+                }
+            </section>
+        )
+    }
+
+
+    const renderProgressBar = () => {
+        return (
+            <div className="progress">
+                <div className="indeterminate"></div>
+            </div>
+        )
+    }
 
     return (
         <div>
             {isLoading ? (
-                <div className="progress">
-                    <div className="indeterminate"></div>
-                </div>
+                renderProgressBar()
             ) : (
                     <div className="transaction-wrapper">
-                        <section className="tracker-header">
-                            <div>
-                                <h5>{tracker.name}</h5>
-                                <p>{tracker.description}</p>
-                            </div>
-                            {!isHistory ?
-                                <button className='footer waves-effect waves-light btn blue lighten-2' onClick={lock}>Lock</button> : <div></div>
-                            }
-                        </section>
-                        <section>
-                            <div className="tracker-summary">
-                                <h6>Summary</h6>
-                            </div>
-                            {
-                                <Summary reload={false} trackerId={TrackerId} />
-                            }
-                        </section>
-                        {!isHistory &&
-                            <section>
-                                <h6>Add Transaction </h6>
-                                <Collapsible data={[{ label: "Deposite", content: <Form submit={(data) => submitTransaction(data, "deposite")} deposite /> }, { label: "Withdraw", content: <Form submit={(data) => submitTransaction(data, "withdraw")} /> }]} />
-                            </section>
-                        }
+                        {renderTrackerInfo(tracker, lock)}
+                        {renderSummary(TrackerId)}
+                        {renderTransactions(isHistory)}
                         <hr />
                         <Analysis />
-                        <section>
-                            <h6>Transaction History</h6>
-                            {
-                                transactions.length > 0 ? (
-                                    <Table showTotal responsive columns={isHistory ? TransactionColumnsHistory : TransactionColumns} rows={transactions} />
-                                ) : (<div>No Data </div>)
-                            }
-                        </section>
+                        {renderTransactionHistory(isHistory, TransactionColumnsHistory, transactions, TransactionColumns)}
                     </div>
-                )}
-        </div>
+                )
+            }
+        </div >
     )
 }
 
@@ -175,5 +210,13 @@ const mapStateToProps = (state) => {
         filter: state.filter
     }
 }
+
+Transactions.PropTypes = {
+    id: PropTypes.number,
+    tracker: PropTypes.number,
+    isHistory: PropTypes.number,
+    filter: PropTypes.bool
+}
+
 
 export default connect(mapStateToProps)(Transactions);

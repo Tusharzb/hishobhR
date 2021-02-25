@@ -7,15 +7,21 @@ import { createSubscription, getSubscription, deleteSubscription } from '../../S
 import { SubscriptionColumns } from '../../Utils/Utils';
 import Table from '../../Components/Table/Table';
 import { CircleLoader } from '../../Components/Loader/Loader';
+import PropTypes from 'prop-types';
+
+
 
 const ActionRow = (props) => {
     return (
         <button onClick={(e) => props.deleteTransaction(e)} className="waves-effect waves-light btn red lighten-2">Delete</button>
     )
 }
+ActionRow.PropTypes = {
+    deleteTransaction: PropTypes.func
+}
 
 
-export default class Subscription extends Component {
+class Subscription extends Component {
 
     constructor(props) {
         super(props)
@@ -56,7 +62,7 @@ export default class Subscription extends Component {
             console.log({ sub });
             const formatSub = sub.data.map(item => ({
                 ...item, repeatDate: this.getDate(item.repeatDate), amount: `${item.amount}/-`,
-                action: <ActionRow deleteTransaction={() => this.deleteTransaction(e,item._id)} />
+                action: <ActionRow deleteTransaction={() => this.deleteTransaction(e, item._id)} />
             }));
             this.setState({ subscription: formatSub, isLoading: false });
         } catch (err) {
@@ -87,7 +93,7 @@ export default class Subscription extends Component {
     }
 
     handleSubmit = async (value) => {
-        console.log({value});
+        console.log({ value });
         try {
             const repsonse = await createSubscription(values);
             console.log(repsonse);
@@ -127,3 +133,7 @@ export default class Subscription extends Component {
         )
     }
 }
+
+
+
+export default Subscription;

@@ -6,6 +6,7 @@ import Card from "../../Components/Card/Card";
 import Analysis from '../../components/Analysis/Analysis';
 import { TransactionColumnsHistory, TransactionColumns } from '../../Utils/Utils';
 import Table from '../../Components/Table/Table';
+import PropTypes from 'prop-types';
 
 class History extends React.Component {
 
@@ -101,6 +102,10 @@ class History extends React.Component {
             </div >
         );
     }
+}
+
+History.PropTypes = {
+    deleteCategory: PropTypes.func
 }
 
 const mapStateToProps = (state) => {

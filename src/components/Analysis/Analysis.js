@@ -5,6 +5,8 @@ import { categories } from '../../Utils/Utils';
 import { connect } from 'react-redux';
 import { Control, Form, actions } from 'react-redux-form';
 import { getCategories } from '../../services/base';
+import PropTypes from 'prop-types';
+
 
 class AnalysisImp extends Component {
 
@@ -104,5 +106,12 @@ const mapDispatchToProps = (dispatch) => {
         formReset: () => dispatch(actions.change("filter", {}))
     }
 }
+
+
+AnalysisImp.PropTypes = {
+    formReset: PropTypes.func,
+    formChange: PropTypes.func,
+}
+
 
 export default connect(null, mapDispatchToProps)(AnalysisImp);

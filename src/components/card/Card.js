@@ -3,6 +3,7 @@ import React from "react";
 import "./Card.style.scss";
 import Summary from "../TransactionSummary/Summary";
 import Collapsible from "../Collapsible/Collapsible";
+import PropTypes from 'prop-types';
 
 
 const Card = (props) => {
@@ -21,13 +22,11 @@ const Card = (props) => {
           <p>{createdOn}</p>
           {
             action1 !== undefined ?
-              // <a className="waves-effect waves-teal btn-flat">Button</a>
               <button href="#" className="cyan lighten-2 waves-effect btn-flat" onClick={() => action1.action(id)} >{action1.label}</button>
               : ""
           }
           {
             action2 !== undefined ?
-              // <a className="waves-effect waves-teal btn-flat">Button</a>
               <button href="#" className="cyan lighten-2 waves-effect btn-flat" onClick={() => action2.action(id)} >{action2.label}</button>
               : ""
           }
@@ -36,5 +35,15 @@ const Card = (props) => {
     </div>
   );
 };
+
+Card.PropTypes = {
+  title: PropTypes.string,
+  content: PropTypes.node,
+  createdOn: PropTypes.string,
+  action1: PropTypes.bool,
+  action2: PropTypes.bool,
+  id: PropTypes.number,
+  isHistory: PropTypes.bool
+}
 
 export default Card;

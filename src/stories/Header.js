@@ -40,7 +40,7 @@ export const Header = ({ user, onLogin, onLogout, onCreateAccount }) => (
   </header>
 );
 
-Header.propTypes = {
+Header.PropTypes = {
   user: PropTypes.shape({}),
   onLogin: PropTypes.func.isRequired,
   onLogout: PropTypes.func.isRequired,

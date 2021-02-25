@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import PropTypes from 'prop-types';
 
 const Collapsible = (props) => {
 
@@ -23,6 +24,11 @@ const Collapsible = (props) => {
             </ul>
         </div>
     )
+}
+
+Collapsible.PropTypes = {
+    data: PropTypes.array,
+    className: PropTypes.string
 }
 
 export default Collapsible

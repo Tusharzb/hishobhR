@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-// import { categories } from '../../Utils/Utils';
 import Select from 'react-select';
+import PropTypes from 'prop-types';
 
 
 import './Form.style.scss';
@@ -24,12 +24,10 @@ const Form = (props) => {
     }, [])
 
     const submit = () => {
-        console.log({ Reason, Category, Amount })
         if (Reason && Category && Amount) {
             props.submit({ Reason, Category, Amount })
             setReason("")
             setCategory('')
-            // instances.destory();
             setAmount("")
         }
     }
@@ -66,5 +64,11 @@ const Form = (props) => {
         </div>
     )
 }
+
+Form.PropTypes = {
+    submit: PropTypes.func,
+    deposite: PropTypes.bool,
+}
+
 
 export default Form

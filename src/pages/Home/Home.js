@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import moment from 'moment';
+import PropTypes from 'prop-types';
 
 import Card from "../../Components/Card/Card";
 
 import { getTrackers, createTracker } from "../../Services/base";
 
 import './Home.style.scss';
-export default class Home extends Component {
+class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -27,7 +28,7 @@ export default class Home extends Component {
       const userId = "5f12bf65af7273065c1a0700";
       const response = await getTrackers(userId);
       const trackers = response.data || [];
-      console.log({trackers});
+      console.log({ trackers });
       if (trackers.length > 0) {
         this.setState({ trackers: trackers });
       }
@@ -42,7 +43,7 @@ export default class Home extends Component {
     const { location, history } = this.props;
     const selectedIndex = trackers.find(item => item._id === id);
     localStorage.setItem('activeTracker', JSON.stringify(selectedIndex));
-    history.push({pathname: `${location.pathname}/${id}`, state : { tracker: selectedIndex, isHistory:false }});
+    history.push({ pathname: `${location.pathname}/${id}`, state: { tracker: selectedIndex, isHistory: false } });
   }
 
   submit = async () => {
@@ -104,3 +105,10 @@ export default class Home extends Component {
     );
   }
 }
+
+Home.propTypes = {
+  location: PropTypes.object,
+  history: PropTypes.object
+}
+
+export default Home;

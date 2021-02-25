@@ -1,4 +1,5 @@
 import React,{useEffect} from 'react'
+import PropTypes from 'prop-types';
 
 import './Tabs.style.scss';
 
@@ -33,6 +34,11 @@ function Tabs(props) {
             </div>
         </div>
     )
+}
+
+Tabs.PropTypes = {
+    TabTitle: PropTypes.string,
+    TabData: PropTypes.array
 }
 
 export default Tabs

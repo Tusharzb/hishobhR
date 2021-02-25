@@ -53,12 +53,11 @@ const Table = (props) => {
     )
 }
 
-Table.propTypes = {
+Table.PropTypes = {
     customClass: PropTypes.string,
     columns: PropTypes.array,
     rows: PropTypes.array,
     showTotal: PropTypes.bool
-
 }
 
 
