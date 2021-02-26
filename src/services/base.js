@@ -78,6 +78,11 @@ export const deleteCategory = (categoryId) => {
     return Instance.delete(`/api/category/${categoryId}`);
 }
 
+export const SummaryByCategory = () => {
+    return Instance.get(`/api/transactions/category/sum/601a9090f0ad480017022e12`);
+}
+
+
 
 
 

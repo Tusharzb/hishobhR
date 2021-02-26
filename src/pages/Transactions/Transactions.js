@@ -6,11 +6,12 @@ import Form from '../../Components/Form/Form';
 import Summary from '../../Components/TransactionSummary/Summary';
 import { TransactionColumns, TransactionColumnsHistory } from '../../Utils/Utils';
 
-import { getTransactions, saveTransactionSummary, removeTransaction, lockTracker } from '../../Services/base';
+import { getTransactions, saveTransactionSummary, removeTransaction, lockTracker, SummaryByCategory } from '../../Services/base';
 
 import './Transaction.style.scss';
 import Analysis from '../../components/Analysis/Analysis';
 import PropTypes from 'prop-types';
+import SummaryChart from '../../components/SummaryChart/SummaryChart';
 
 const ActionRow = (props) => {
     return (
@@ -27,6 +28,7 @@ const Transactions = (props) => {
     const [transactions, setTransactions] = useState([]);
     const [isLoading, setisLoading] = useState(true);
     const [summaryReload, setsummaryReload] = useState(false);
+    const [SummaryCategory, setSummaryCategory] = useState([]);
     const [columns, setcolumns] = useState([{
         label: "Reason",
         key: "reason"
@@ -70,6 +72,7 @@ const Transactions = (props) => {
     const deleteTransaction = async (transactionId) => {
         try {
             const transaction = await removeTransaction(transactionId);
+
             if (transaction) {
                 await loadData(id)
             }
@@ -79,14 +82,15 @@ const Transactions = (props) => {
     }
 
     const loadData = async (Trackerid) => {
-        // setisLoading(true);
         try {
             const response = await getTransactions(Trackerid, filter);
             const transactions = response.data || [];
-            console.log(response.data)
+            const response1 = await SummaryByCategory();
+            const SummaryCategory = response1.data || [];
             transactions && transactions.forEach(element => {
                 element.action = <ActionRow deleteTransaction={() => deleteTransaction(element._id)} />;
             })
+            setSummaryCategory(SummaryCategory);
             setTransactions(transactions);
             setisLoading(false);
         } catch (err) {
@@ -187,12 +191,14 @@ const Transactions = (props) => {
     }
 
     return (
+
         <div>
             {isLoading ? (
                 renderProgressBar()
             ) : (
                     <div className="transaction-wrapper">
                         {renderTrackerInfo(tracker, lock)}
+                        <SummaryChart chartData={SummaryCategory} />
                         {renderSummary(TrackerId)}
                         {renderTransactions(isHistory)}
                         <hr />
