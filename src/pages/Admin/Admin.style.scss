@@ -1,9 +1,11 @@
 .admin {
     margin-top: 25px;
-    .link{
+
+    .link {
         cursor: pointer;
         margin: 10px 10px;
     }
+
     &-category {
         display: flex;
         justify-content: space-between;
@@ -39,7 +41,21 @@
         }
 
         .inputCategory {
-            width: 80%;
+            width: 70%;
         }
+    }
+
+    .color-picker {
+        .picker__value-container {
+            width: 60px;
+            height: 30px;
+            margin-top: 10px;
+        }
+        .picker__indicator-separator{
+            display: none;
+        }
+    }
+    .footer{
+        margin: 0;
     }
 }
