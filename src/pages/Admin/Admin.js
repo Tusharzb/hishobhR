@@ -28,6 +28,14 @@ const ColorOptions = [
     { label: <div style={{ backgroundColor: "#b9ac6a", width: "30px", height: "30px" }}></div>, value: "#b9ac6a" },
     { label: <div style={{ backgroundColor: "#adb96a", width: "30px", height: "30px" }}></div>, value: "#adb96a" },
     { label: <div style={{ backgroundColor: "#8cb96a", width: "30px", height: "30px" }}></div>, value: "#8cb96a" },
+    { label: <div style={{ backgroundColor: "#8cb96b", width: "30px", height: "30px" }}></div>, value: "#8cb96b" },
+    { label: <div style={{ backgroundColor: "#8db96b", width: "30px", height: "30px" }}></div>, value: "#8db96b" },
+    { label: <div style={{ backgroundColor: "#9db96b", width: "30px", height: "30px" }}></div>, value: "#9db96b" },
+    { label: <div style={{ backgroundColor: "#e65858", width: "30px", height: "30px" }}></div>, value: "#e65858" },
+    { label: <div style={{ backgroundColor: "#da611a", width: "30px", height: "30px" }}></div>, value: "#da611a" },
+    { label: <div style={{ backgroundColor: "#2f1404", width: "30px", height: "30px" }}></div>, value: "#2f1404" },
+    { label: <div style={{ backgroundColor: "#908c0d", width: "30px", height: "30px" }}></div>, value: "#908c0d" },
+    { label: <div style={{ backgroundColor: "#0cf19c", width: "30px", height: "30px" }}></div>, value: "#0cf19c" },
 ]
 
 
@@ -44,6 +52,7 @@ class Admin extends Component {
             isLoading: true,
             newCategory: "",
             showCategory: false,
+            color: ""
         }
     }
 
@@ -79,9 +88,9 @@ class Admin extends Component {
 
 
     submit = async () => {
-        const { newCategory } = this.state
+        const { newCategory, color } = this.state
         try {
-            await addCategory({ name: newCategory });
+            await addCategory({ name: newCategory, color });
             this.loadData();
             this.setState({ newCategory: "" });
         } catch (er) {
@@ -105,13 +114,17 @@ class Admin extends Component {
     }
 
 
+    handleColor = (select) => {
+        this.setState({ color: select.value })
+    }
+
     render() {
         const { newCategory, showCategory } = this.state;
         return (
             <div className={DEFAULT_CLASSNAME}>
                 <div className={`${DEFAULT_CLASSNAME}-category`}>
                     <input className="inputCategory" placeholder="add category" onChange={(e) => this.handelInput(e.target.value)} value={newCategory} />
-                    <Select options={ColorOptions} className="color-picker" classNamePrefix="picker" required />
+                    <Select onChange={this.handleColor} options={ColorOptions} className="color-picker" classNamePrefix="picker" required />
                     <button className={`footer waves-effect waves-light btn`} onClick={this.submit}>Add</button>
                     {this.renderTable(showCategory)}
                 </div>

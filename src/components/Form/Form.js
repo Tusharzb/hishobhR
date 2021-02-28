@@ -25,7 +25,7 @@ const Form = (props) => {
 
     const submit = () => {
         if (Reason && Category && Amount) {
-            props.submit({ Reason, Category, Amount })
+            props.submit({ Reason, Category: Category.label, Amount })
             setReason("")
             setCategory('')
             setAmount("")
@@ -36,7 +36,7 @@ const Form = (props) => {
     }
 
     const onCategorySelect = (option) => {
-        setCategory(option.label);
+        setCategory(option);
     }
 
     return (
@@ -52,6 +52,7 @@ const Form = (props) => {
                         onChange={onCategorySelect}
                         options={optionGenerator(Categories)}
                         placeholder="Select Category"
+                        value={Category}
                     />}
                 </div>
                 <div className="input-field col s12 m3">

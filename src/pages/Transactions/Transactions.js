@@ -181,6 +181,13 @@ const Transactions = (props) => {
         )
     }
 
+    const renderSummaryChart = (SummaryCategory) => {
+        return (
+            <SummaryChart chartData={SummaryCategory} />
+        )
+
+    }
+
 
     const renderProgressBar = () => {
         return (
@@ -198,7 +205,7 @@ const Transactions = (props) => {
             ) : (
                     <div className="transaction-wrapper">
                         {renderTrackerInfo(tracker, lock)}
-                        <SummaryChart chartData={SummaryCategory} />
+                        {renderSummaryChart(SummaryCategory)}
                         {renderSummary(TrackerId)}
                         {renderTransactions(isHistory)}
                         <hr />

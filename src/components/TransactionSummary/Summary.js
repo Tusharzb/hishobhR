@@ -3,7 +3,7 @@ import Table from '../Table/Table';
 import { getTransactionSummary } from '../../Services/base';
 import { CircleLoader } from '../Loader/Loader';
 import PropTypes from 'prop-types';
-
+import './summary.style.scss';
 
 
 const Summary = (props) => {
@@ -51,7 +51,7 @@ const Summary = (props) => {
             {isLoading ?
                 <CircleLoader /> :
                 TransactionSummary.length > 0 ? (
-                    <Table columns={trackerSummary} rows={TransactionSummary} />
+                    <Table customClass="summaryTable" columns={trackerSummary} rows={TransactionSummary} />
                 ) : (<div>No Data </div>)
             }
         </div>
