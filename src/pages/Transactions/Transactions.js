@@ -85,8 +85,8 @@ const Transactions = (props) => {
         try {
             const response = await getTransactions(Trackerid, filter);
             const transactions = response.data || [];
-            const response1 = await SummaryByCategory();
-            const SummaryCategory = response1.data || [];
+            const response1 = await SummaryByCategory(Trackerid);
+            const SummaryCategory = response1.data.filter(i => i._id !== "Salary") || [];
             transactions && transactions.forEach(element => {
                 element.action = <ActionRow deleteTransaction={() => deleteTransaction(element._id)} />;
             })
