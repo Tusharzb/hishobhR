@@ -1,6 +1,12 @@
-.brand-logo{
+.brand-logo {
     padding-left: 10px !important;
 }
-.menu{
+
+.menu {
     padding-right: 10px;
+}
+
+.disabled {
+    pointer-events: none;
+    opacity: .7;
 }
